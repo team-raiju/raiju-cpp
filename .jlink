@@ -1,0 +1,10 @@
+device STM32F103RF
+si SWD
+speed 4000
+connect
+r
+h
+loadfile build/raiju.hex
+r
+g
+exit
