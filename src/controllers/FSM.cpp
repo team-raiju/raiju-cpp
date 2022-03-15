@@ -2,7 +2,7 @@
 
 namespace raiju {
 
-FSM::FSM() {
+FSM::FSM() : led(GPIOB, hal::GPIO::Pin::p1), button(GPIOC, hal::GPIO::Pin::p15) {
     state = &IdleState::instance();
 }
 

@@ -2,14 +2,15 @@
 #define __FSM_HPP__
 
 #include "DistanceService.hpp"
+#include "hal.hpp"
 
 #define declState(StateName)                                                                                           \
     class StateName : public State {                                                                                   \
     public:                                                                                                            \
-        void enter(FSM *fsm);                                                                                          \
-        void cycle(FSM *fsm);                                                                                          \
-        void exit(FSM *fsm);                                                                                           \
-        static State &instance();                                                                                      \
+        void enter(FSM* fsm);                                                                                          \
+        void cycle(FSM* fsm);                                                                                          \
+        void exit(FSM* fsm);                                                                                           \
+        static State& instance();                                                                                      \
         ~StateName();                                                                                                  \
                                                                                                                        \
     private:                                                                                                           \
@@ -22,9 +23,9 @@ class FSM {
 public:
     class State {
     public:
-        virtual void enter(FSM *fsm) = 0;
-        virtual void cycle(FSM *fsm) = 0;
-        virtual void exit(FSM *fsm) = 0;
+        virtual void enter(FSM* fsm) = 0;
+        virtual void cycle(FSM* fsm) = 0;
+        virtual void exit(FSM* fsm) = 0;
         virtual ~State() {}
     };
 
@@ -36,11 +37,15 @@ public:
     void init();
     void cycle();
 
-    void set_state(State &state);
+    void set_state(State& state);
 
 private:
     DistanceService s_distance;
-    State *state;
+
+    hal::GPIO led;
+    hal::GPIO button;
+
+    State* state;
 };
 
 } // namespace raiju
