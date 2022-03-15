@@ -1,8 +1,12 @@
 #if !defined(__FSM_HPP__)
 #define __FSM_HPP__
 
-#include "DistanceService.hpp"
 #include "hal.hpp"
+
+#include "BuzzerService.hpp"
+#include "DistanceService.hpp"
+#include "DrivingService.hpp"
+#include "RadioService.hpp"
 
 #define declState(StateName)                                                                                           \
     class StateName : public State {                                                                                   \
@@ -41,6 +45,9 @@ public:
 
 private:
     DistanceService s_distance;
+    RadioService s_radio;
+    DrivingService s_driving;
+    BuzzerService s_buzzer;
 
     hal::GPIO led;
     hal::GPIO button;

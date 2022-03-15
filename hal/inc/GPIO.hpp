@@ -7,7 +7,7 @@ namespace hal {
 
 class GPIO {
 public:
-    enum Pin {
+    enum Pin : uint16_t {
         p0 = GPIO_PIN_0,
         p1 = GPIO_PIN_1,
         p2 = GPIO_PIN_2,
@@ -26,7 +26,7 @@ public:
         p15 = GPIO_PIN_15,
     };
 
-    GPIO(GPIO_TypeDef *port, Pin pin);
+    GPIO(GPIO_TypeDef* port, Pin pin);
     Pin pin() const;
 
     void toggle();
@@ -36,7 +36,7 @@ public:
     bool is_active();
 
 private:
-    GPIO_TypeDef *_port;
+    GPIO_TypeDef* _port;
     Pin _pin;
 };
 

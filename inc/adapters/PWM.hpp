@@ -10,6 +10,7 @@ public:
     PWM(hal::TIM timer, hal::TIM::Channel channel);
 
     void set(uint32_t value);
+    void set_frequency(uint32_t value);
 
 private:
     hal::TIM _timer;

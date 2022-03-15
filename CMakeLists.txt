@@ -49,10 +49,14 @@ add_executable(${EXECUTABLE}
     ${STM32CUBE_GENERATED_FILES}
     ${HAL_FILES}
     src/main.cpp
+
     src/adapters/PPM.cpp
     src/adapters/PWM.cpp
+
     src/controllers/FSM.cpp
     src/controllers/IdleState.cpp
+
+    src/services/BuzzerService.cpp
     src/services/DistanceService.cpp
     src/services/DrivingService.cpp
     src/services/RadioService.cpp

@@ -24,6 +24,10 @@ void TIM::set_counter(uint32_t cnt) {
     __HAL_TIM_SET_COUNTER(this->htim, cnt);
 }
 
+void TIM::set_prescaler(uint32_t value) {
+    __HAL_TIM_SET_PRESCALER(this->htim, value);
+}
+
 void TIM::set_compare(Channel channel, uint32_t value) {
     __HAL_TIM_SET_COMPARE(this->htim, channel, value);
 }

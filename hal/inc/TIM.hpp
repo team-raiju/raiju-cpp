@@ -34,6 +34,7 @@ public:
 
     uint32_t get_counter() const;
     void set_counter(uint32_t cnt);
+    void set_prescaler(uint32_t value);
     void set_compare(Channel channel, uint32_t value);
 
     TIM_TypeDef* instance() const;
