@@ -23,4 +23,4 @@ jobs:
         tags: ${{ env.TAG }}
 
     - name: Build Project
-      run: docker run -v "${PWD}":/workspaces/Raiju --rm -w /workspaces/Raiju ${{ env.TAG }} /bin/bash scripts/build.sh
+      run: docker run -v "${PWD}":/workspace --rm -w /workspace ${{ env.TAG }} /bin/bash scripts/build.sh

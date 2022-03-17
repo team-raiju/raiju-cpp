@@ -13,8 +13,8 @@ public:
     void toggle_board_led();
 
 private:
-    hal::GPIO led_board;
     WS2812 led_stripe;
+    hal::GPIO led_board;
 };
 
 } // namespace raiju

@@ -8,13 +8,13 @@
 namespace raiju {
 
 class DistanceService {
-private:
-    hal::GPIO sensors[9];
-
 public:
     DistanceService();
 
     bool is_reading(uint8_t sensor);
+
+private:
+    hal::GPIO sensors[9];
 };
 
 } // namespace raiju

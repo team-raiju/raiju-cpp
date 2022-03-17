@@ -21,4 +21,20 @@ RadioService::Coordinate RadioService::coordinates() const {
     };
 }
 
+int16_t RadioService::get_ch1() const {
+    return ppms[0].value();
+}
+
+int16_t RadioService::get_ch2() const {
+    return ppms[1].value();
+}
+
+int16_t RadioService::get_ch3() const {
+    return ppms[2].value();
+}
+
+int16_t RadioService::get_ch4() const {
+    return ppms[3].value();
+}
+
 } // namespace raiju

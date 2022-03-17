@@ -19,6 +19,11 @@ public:
 
     Coordinate coordinates() const;
 
+    int16_t get_ch1() const;
+    int16_t get_ch2() const;
+    int16_t get_ch3() const;
+    int16_t get_ch4() const;
+
 private:
     PPM ppms[4];
 };

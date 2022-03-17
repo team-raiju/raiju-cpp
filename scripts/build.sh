@@ -1,4 +1,4 @@
 bash scripts/cube.sh
 
-mkdir -p /workspaces/Raiju/build
-/usr/sbin/cmake --build /workspaces/Raiju/build --config Debug --target all -j 8
+mkdir -p build
+/usr/sbin/cmake --build build --config Debug --target all -j 8

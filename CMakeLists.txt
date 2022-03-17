@@ -42,6 +42,7 @@ set(HAL_FILES
     hal/UART.cpp
     hal/GPIO.cpp
     hal/TIM.cpp
+    hal/ADC.cpp
     hal/mcu.cpp
 )
 
@@ -51,6 +52,7 @@ add_executable(${EXECUTABLE}
     ${HAL_FILES}
     src/main.cpp
 
+    src/adapters/ADCDMA.cpp
     src/adapters/PPM.cpp
     src/adapters/PWM.cpp
     src/adapters/WS2812.cpp
@@ -63,6 +65,7 @@ add_executable(${EXECUTABLE}
     src/services/DistanceService.cpp
     src/services/DrivingService.cpp
     src/services/LEDService.cpp
+    src/services/LineService.cpp
     src/services/RadioService.cpp
     src/services/StartModuleService.cpp
 )
