@@ -7,10 +7,11 @@ namespace raiju {
 
 class PWM {
 public:
-    PWM(hal::TIM timer, hal::TIM::Channel channel);
+    PWM(hal::TIM timer, hal::TIM::Channel channel, bool start = true);
 
     void set(uint32_t value);
     void set_frequency(uint32_t value);
+    void start_dma(uint32_t* data, size_t size);
 
 private:
     hal::TIM _timer;

@@ -31,6 +31,7 @@ public:
 
     void start_it();
     void start_pwm(Channel channel);
+    void start_pwm_with_dma(Channel channel, uint32_t* data, size_t size);
 
     uint32_t get_counter() const;
     void set_counter(uint32_t cnt);

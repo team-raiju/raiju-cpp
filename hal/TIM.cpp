@@ -16,6 +16,10 @@ void TIM::start_pwm(Channel channel) {
     HAL_TIM_PWM_Start(this->htim, channel);
 }
 
+void TIM::start_pwm_with_dma(Channel channel, uint32_t* data, size_t size) {
+    HAL_TIM_PWM_Start_DMA(this->htim, channel, data, size);
+}
+
 uint32_t TIM::get_counter() const {
     return __HAL_TIM_GET_COUNTER(this->htim);
 }

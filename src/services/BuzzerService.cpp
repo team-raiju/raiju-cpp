@@ -1,4 +1,5 @@
 #include "hal.hpp"
+#include "utils.h"
 
 #include "BuzzerService.hpp"
 
@@ -110,6 +111,55 @@ static uint8_t tetris_note_duration[] = {4, 8, 8, 4, 8, 8, 4, 8, 8, 4, 8, 8, 4, 
                                          4, 8, 8, 4, 8, 4, 4, 4, 4, 8, 4, 8, 8, 4, 8, 4, 8, 8, 4, 8, 4, 8, 8, 4, 8,
                                          8, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 4, 8, 2, 2, 2, 2, 4, 4, 2, 2};
 
+static uint16_t megalovania_melody[] = {
+    NOTE_D3,  NOTE_D3,  NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_C3,  NOTE_C3,  NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_B2,  NOTE_B2,  NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_AS2, NOTE_AS2, NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_D3,  NOTE_D3,  NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_C3,  NOTE_C3,  NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_B2,  NOTE_B2,  NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_AS2, NOTE_AS2, NOTE_D4,  NOTE_A3,  0,        NOTE_GS3, NOTE_G3,  NOTE_F3,  NOTE_D3, NOTE_F3, NOTE_G3,
+    NOTE_D4,  NOTE_D4,  NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_C4,  NOTE_C4,  NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_B3,  NOTE_B3,  NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_AS3, NOTE_AS3, NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_D4,  NOTE_D4,  NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_C4,  NOTE_C4,  NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_B3,  NOTE_B3,  NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_AS3, NOTE_AS3, NOTE_D5,  NOTE_A4,  0,        NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_D4,  NOTE_D4,  NOTE_D4,  NOTE_F4, NOTE_F4, NOTE_F4,
+    NOTE_G4,  NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4,  NOTE_F4,  NOTE_G4,  0,        NOTE_F4, NOTE_F4, NOTE_F4,
+    NOTE_G4,  NOTE_GS4, NOTE_A4,  NOTE_C5,  NOTE_A4,  NOTE_D5,  NOTE_D5,  NOTE_D5,  NOTE_A4, NOTE_D5, NOTE_C5,
+    NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_D4,  NOTE_D4,  NOTE_D4,  NOTE_F4, NOTE_F4, NOTE_F4,
+    NOTE_F4,  NOTE_D4,  NOTE_F4,  NOTE_E4,  NOTE_D4,  NOTE_C4,  0,        NOTE_G4,  NOTE_E4, NOTE_D4, NOTE_D4,
+    NOTE_D4,  NOTE_D4,  NOTE_F3,  NOTE_G3,  NOTE_AS3, NOTE_C4,  NOTE_D4,  NOTE_F4,  NOTE_C5, 0,       NOTE_F4,
+    NOTE_D4,  NOTE_F4,  NOTE_G4,  NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4,  NOTE_GS4, NOTE_G4, NOTE_F4, NOTE_D4,
+    NOTE_F4,  NOTE_F4,  NOTE_F4,  NOTE_GS4, NOTE_A4,  NOTE_C5,  NOTE_A4,  NOTE_GS4, NOTE_G4, NOTE_F4, NOTE_D4,
+    NOTE_E4,  NOTE_F4,  NOTE_G4,  NOTE_A4,  NOTE_C5,  NOTE_CS5, NOTE_GS4, NOTE_GS4, NOTE_G4, NOTE_F4, NOTE_G4,
+    NOTE_F3,  NOTE_G3,  NOTE_A3,  NOTE_F4,  NOTE_E4,  NOTE_D4,  NOTE_E4,  NOTE_F4,  NOTE_G4, NOTE_E4, NOTE_A4,
+    NOTE_A4,  NOTE_G4,  NOTE_F4,  NOTE_DS4, NOTE_CS4, NOTE_DS4, 0,        NOTE_F4,  NOTE_D4, NOTE_F4, NOTE_G4,
+    NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4,  NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4,  NOTE_F4, NOTE_F4, NOTE_F4,
+    NOTE_GS4, NOTE_A4,  NOTE_C5,  NOTE_A4,  NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_D4,  NOTE_E4, NOTE_F4, NOTE_G4,
+    NOTE_A4,  NOTE_C5,  NOTE_CS5, NOTE_GS4, NOTE_GS4, NOTE_G4,  NOTE_F4,  NOTE_G4,  NOTE_F3, NOTE_G3, NOTE_A3,
+    NOTE_F4,  NOTE_E4,  NOTE_D4,  NOTE_E4,  NOTE_F4,  NOTE_G4,  NOTE_E4,  NOTE_A4,  NOTE_A4, NOTE_G4, NOTE_F4,
+    NOTE_DS4, NOTE_CS4, NOTE_DS4,
+};
+
+static uint8_t megalovania_note_duration[] = {
+    16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,
+    8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,
+    6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16,
+    16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,
+    8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16,
+    8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16, 16, 16, 16, 16, 8,  6,  32, 8,  8,  8,  16,
+    16, 16, 8,  16, 8,  8,  8,  8,  4,  16, 8,  16, 8,  8,  8,  16, 16, 16, 16, 16, 8,  8,  16, 8,  8,  8,  8,  8,  8,
+    8,  8,  16, 16, 16, 2,  8,  16, 8,  8,  8,  8,  4,  16, 8,  16, 8,  8,  8,  8,  8,  16, 8,  16, 8,  8,  8,  8,  8,
+    8,  8,  16, 8,  15, 8,  8,  2,  3,  16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 8,  2,  16, 8,  16, 8,  16, 16,
+    16, 16, 16, 16, 8,  8,  8,  8,  8,  8,  16, 16, 16, 2,  8,  8,  8,  8,  4,  4,  4,  4,  4,  4,  2,  8,  8,  8,  8,
+    2,  2,  3,  16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 8,  2,  16, 8,  16, 8,  16, 16, 16, 16, 16, 16, 8,  8,
+    8,  8,  8,  8,  16, 16, 16, 2,  8,  8,  8,  8,  4,  4,  4,  4,  4,  4,  2,  8,  8,  8,  8,  2,  1};
+
 namespace mcu = hal::mcu;
 using hal::TIM;
 
@@ -118,11 +168,9 @@ namespace raiju {
 BuzzerService::BuzzerService() : buzzer(TIM(&htim12), TIM::Channel::ch1) {}
 
 void BuzzerService::play_tetris() {
-    for (uint8_t note = 0; note < sizeof(tetris_note_duration); note++) {
+    for (uint8_t note = 0; note < len(tetris_note_duration); note++) {
         // to calculate the note duration, take one second divided by the note type.
         // e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-        buzzer.set(50);
-
         uint16_t note_duration = 1000 / tetris_note_duration[note];
         buzzer.set_frequency(tetris_melody[note]);
         mcu::sleep(note_duration);
@@ -130,8 +178,22 @@ void BuzzerService::play_tetris() {
         // to distinguish the notes, set a minimum time between them.
         // the note's duration + 30% seems to work well:
         buzzer.set(0);
-        int pauseBetweenNotes = note_duration * 0.5;
-        mcu::sleep(pauseBetweenNotes);
+        mcu::sleep(note_duration * 0.5);
+    }
+
+    buzzer.set(0);
+}
+
+void BuzzerService::play_megalovania() {
+    for (uint8_t note = 0; note < len(megalovania_note_duration); note++) {
+        buzzer.set(50);
+
+        uint16_t note_duration = 1200 / megalovania_note_duration[note];
+        buzzer.set_frequency(megalovania_melody[note]);
+        mcu::sleep(note_duration);
+
+        buzzer.set(0);
+        mcu::sleep(note_duration * 0.5);
     }
 
     buzzer.set(0);

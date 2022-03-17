@@ -3,9 +3,13 @@
 
 #include "hal.hpp"
 
+#include "WS2812.hpp"
+
 #include "BuzzerService.hpp"
+#include "DisplayService.hpp"
 #include "DistanceService.hpp"
 #include "DrivingService.hpp"
+#include "LEDService.hpp"
 #include "RadioService.hpp"
 
 #define declState(StateName)                                                                                           \
@@ -44,12 +48,13 @@ public:
     void set_state(State& state);
 
 private:
-    DistanceService s_distance;
-    RadioService s_radio;
-    DrivingService s_driving;
+    // DistanceService s_distance;
+    // DisplayService s_display;
+    // RadioService s_radio;
+    // DrivingService s_driving;
+    LEDService s_led;
     BuzzerService s_buzzer;
 
-    hal::GPIO led;
     hal::GPIO button;
 
     State* state;

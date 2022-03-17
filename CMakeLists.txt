@@ -39,6 +39,7 @@ set(STM32CUBE_GENERATED_FILES
 )
 
 set(HAL_FILES
+    hal/UART.cpp
     hal/GPIO.cpp
     hal/TIM.cpp
     hal/mcu.cpp
@@ -52,14 +53,18 @@ add_executable(${EXECUTABLE}
 
     src/adapters/PPM.cpp
     src/adapters/PWM.cpp
+    src/adapters/WS2812.cpp
 
     src/controllers/FSM.cpp
     src/controllers/IdleState.cpp
 
     src/services/BuzzerService.cpp
+    src/services/DisplayService.cpp
     src/services/DistanceService.cpp
     src/services/DrivingService.cpp
+    src/services/LEDService.cpp
     src/services/RadioService.cpp
+    src/services/StartModuleService.cpp
 )
 
 target_compile_definitions(${EXECUTABLE} PRIVATE

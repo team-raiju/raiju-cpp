@@ -10,6 +10,7 @@ public:
     BuzzerService();
 
     void play_tetris();
+    void play_megalovania();
 
 private:
     PWM buzzer;
