@@ -24,3 +24,11 @@ jobs:
 
     - name: Build Project
       run: docker run -v "${PWD}":/workspace --rm -w /workspace ${{ env.TAG }} /bin/bash scripts/build.sh
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          build/raiju.bin
+          build/raiju.hex

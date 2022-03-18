@@ -12,4 +12,8 @@ void ADC::stop_dma() {
     HAL_ADC_Stop_DMA(hadc);
 }
 
+ADC_TypeDef* ADC::instance() const {
+    return hadc->Instance;
+}
+
 } // namespace hal

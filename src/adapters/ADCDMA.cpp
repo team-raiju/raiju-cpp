@@ -6,9 +6,14 @@
 
 #include "ADCDMA.hpp"
 
+namespace mcu = hal::mcu;
+using hal::ADC;
+
 namespace raiju {
 
-ADCDMA::ADCDMA() : adc(hal::ADC(&hadc1)) {}
+ADCDMA::ADCDMA() : adc(hal::ADC(&hadc1)) {
+    mcu::add_adc_interrupt(this);
+}
 
 ADCDMA& ADCDMA::instance() {
     static ADCDMA s;
@@ -43,6 +48,13 @@ void ADCDMA::calculate_readings_and_restart() {
 uint32_t ADCDMA::get_reading(size_t idx) const {
     idx = min(idx, amount - 1);
     return readings[idx];
+}
+
+void ADCDMA::on_interrupt(ADC_HandleTypeDef* hadc) {
+    if (hadc->Instance == adc.instance()) {
+        adc.stop_dma();
+        reading_done = true;
+    }
 }
 
 } // namespace raiju

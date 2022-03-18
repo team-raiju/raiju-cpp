@@ -3,7 +3,7 @@
 namespace raiju {
 
 FSM::FSM() : button(GPIOC, hal::GPIO::Pin::p15) {
-    state = &IdleState::instance();
+    state = &InitState::instance();
 }
 
 void FSM::init() {

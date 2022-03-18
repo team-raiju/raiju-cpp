@@ -23,6 +23,8 @@ public:
     void start_dma(uint32_t* buffer, size_t size);
     void stop_dma();
 
+    ADC_TypeDef* instance() const;
+
 private:
     ADC_HandleTypeDef* hadc;
 };
