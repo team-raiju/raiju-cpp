@@ -45,7 +45,6 @@ void WS2812::reset_all() {
     for (uint8_t i = 0; i < led_amount; i++) {
         set_color(i, Color::black());
     }
-
 }
 
 void WS2812::set_color(uint8_t led_index, Color color) {
@@ -71,3 +70,9 @@ void WS2812::send() {
 }
 
 } // namespace raiju
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim) {
+    if (htim->Instance == TIM2) {
+        HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+    }
+}

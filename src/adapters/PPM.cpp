@@ -7,6 +7,9 @@ namespace raiju {
 PPM::PPM(hal::GPIO gpio, hal::TIM timer) : _ppm_in(gpio), _timer(timer) {
     hal::mcu::add_exti_interrupt(this);
     hal::mcu::add_tim_interrupt(this);
+
+    _value = PPM::stopped_value_ms;
+    timer.start_it();
 }
 
 uint16_t PPM::value() const {

@@ -12,6 +12,7 @@ public:
     DrivingService();
 
     void drive(int16_t left, int16_t right);
+    void stop();
 
 private:
     PWM left_motor[2];

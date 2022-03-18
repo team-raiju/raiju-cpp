@@ -20,6 +20,8 @@ DrivingService::DrivingService()
       _en(GPIOA, GPIO::Pin::p13) {}
 
 void DrivingService::drive(int16_t left, int16_t right) {
+    enable();
+
     left = constrain(left, -99, 99);
     right = constrain(right, -99, 99);
 
@@ -38,12 +40,17 @@ void DrivingService::drive(int16_t left, int16_t right) {
     set_motor(right_motor, right);
 }
 
+void DrivingService::stop() {
+    drive(0, 0);
+    disable();
+}
+
 void DrivingService::enable() {
-    _en.set();
+    _en.reset();
 }
 
 void DrivingService::disable() {
-    _en.reset();
+    _en.set();
 }
 
 void DrivingService::set_motor(PWM motor[2], int32_t speed) {

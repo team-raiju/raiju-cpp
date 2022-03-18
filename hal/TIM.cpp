@@ -10,6 +10,7 @@ TIM::TIM(TIM_HandleTypeDef* htim) : htim(htim) {}
 
 void TIM::start_it() {
     HAL_TIM_Base_Start_IT(this->htim);
+    set_counter(0);
 }
 
 void TIM::start_pwm(Channel channel) {

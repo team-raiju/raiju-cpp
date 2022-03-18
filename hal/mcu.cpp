@@ -6,6 +6,9 @@ extern "C" {
 void SystemClock_Config(void);
 }
 
+uint32_t tester1 = 0;
+uint32_t tester2 = 0;
+
 namespace hal::mcu {
 
 static uint8_t m_exti_amount = 0;
@@ -60,13 +63,7 @@ void add_tim_interrupt(tim_interruptible* interruptible) {
  * @note This must be outside the namespace to allow linkage with the weak
  * version inside HAL
  */
-void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin) {
-    for (uint8_t i = 0; i < hal::mcu::m_exti_amount; i++) {
-        hal::mcu::m_exti_ints[i]->on_interrupt(GPIO_Pin);
-    }
-}
-
-void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin) {
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     for (uint8_t i = 0; i < hal::mcu::m_exti_amount; i++) {
         hal::mcu::m_exti_ints[i]->on_interrupt(GPIO_Pin);
     }

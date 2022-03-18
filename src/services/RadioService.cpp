@@ -22,19 +22,19 @@ RadioService::Coordinate RadioService::coordinates() const {
 }
 
 int16_t RadioService::get_ch1() const {
-    return ppms[0].value();
+    return ppms[0].constrained_value();
 }
 
 int16_t RadioService::get_ch2() const {
-    return ppms[1].value();
+    return ppms[1].constrained_value();
 }
 
 int16_t RadioService::get_ch3() const {
-    return ppms[2].value();
+    return ppms[2].constrained_value();
 }
 
 int16_t RadioService::get_ch4() const {
-    return ppms[3].value();
+    return ppms[3].constrained_value();
 }
 
 } // namespace raiju

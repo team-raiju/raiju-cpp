@@ -50,8 +50,8 @@ public:
 private:
     // DistanceService s_distance;
     // DisplayService s_display;
-    // RadioService s_radio;
-    // DrivingService s_driving;
+    RadioService s_radio;
+    DrivingService s_driving;
     LEDService s_led;
     BuzzerService s_buzzer;
 
