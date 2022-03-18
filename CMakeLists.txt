@@ -58,7 +58,13 @@ add_executable(${EXECUTABLE}
     src/adapters/WS2812.cpp
 
     src/controllers/FSM.cpp
+    src/controllers/AutoWaitState.cpp
     src/controllers/IdleState.cpp
+    src/controllers/InitState.cpp
+    src/controllers/StrategyState.cpp
+    src/controllers/RCState.cpp
+    src/controllers/SensorCheckState.cpp
+    src/controllers/RCCheckState.cpp
 
     src/services/BuzzerService.cpp
     src/services/DisplayService.cpp

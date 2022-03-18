@@ -11,7 +11,7 @@ void FSM::init() {
 }
 
 void FSM::cycle() {
-    state->cycle(this);
+    this->state->cycle(this);
 }
 
 void FSM::set_state(State& state) {

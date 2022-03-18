@@ -37,7 +37,13 @@ public:
         virtual ~State() {}
     };
 
+    declState(InitState);
     declState(IdleState);
+    declState(AutoWaitState);
+    declState(StrategyState);
+    declState(RCCheckState);
+    declState(RCState);
+    declState(SensorCheckState);
 
 public:
     FSM();
