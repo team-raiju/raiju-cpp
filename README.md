@@ -20,10 +20,9 @@ Raiju is an autonomous/RC sumo robot, this project contains it's firmware in C++
 
 -----
 
-## 📂 Project Structure
+## 📂 Project Structure 
 
 <!--
-
 folders
 
 - cube
@@ -35,7 +34,6 @@ folders
     - controllers
     - services
 - ui
-
 -->
 
 ---

@@ -12,23 +12,25 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(STM_DRIVERS_FOLDER /usr/share/STM32CubeF1/Drivers)
+
 set(STM32CUBE_GENERATED_FILES
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
 
     cube/Src/main.c
     cube/Src/stm32f1xx_hal_msp.c
@@ -85,10 +87,10 @@ target_compile_definitions(${EXECUTABLE} PRIVATE
 
 target_include_directories(${EXECUTABLE} SYSTEM PRIVATE
     cube/Inc
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Inc
-    /usr/share/STM32CubeF1/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
-    /usr/share/STM32CubeF1/Drivers/CMSIS/Device/ST/STM32F1xx/Include
-    /usr/share/STM32CubeF1/Drivers/CMSIS/Include
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Inc
+    ${STM_DRIVERS_FOLDER}/STM32F1xx_HAL_Driver/Inc/Legacy
+    ${STM_DRIVERS_FOLDER}/CMSIS/Device/ST/STM32F1xx/Include
+    ${STM_DRIVERS_FOLDER}/CMSIS/Include
 )
 
 target_include_directories(${EXECUTABLE} PRIVATE
