@@ -2,10 +2,17 @@
 
 #include "FSM.hpp"
 
+namespace mcu = hal::mcu;
+
 namespace raiju {
 
 void FSM::InitState::enter(FSM* fsm) {
-    fsm->s_led.board_led_on();
+    fsm->s_bt.transmit("s:init");
+
+    fsm->s_driving.stop();
+    fsm->s_line.start();
+
+    fsm->s_led.purple_charge();
 }
 
 void FSM::InitState::cycle(FSM* fsm) {

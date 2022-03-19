@@ -10,6 +10,7 @@ public:
     static const int white_threshold = 500;
 
     enum Position {
+        Battery = 0, // Gambi
         FR1 = 1,
         FR2 = 2,
         FL1 = 3,
@@ -21,6 +22,9 @@ public:
     LineService();
 
     bool is_white(Position pos);
+    uint16_t raw_reading(Position pos);
+
+    void start();
 
 private:
     ADCDMA* adcs;

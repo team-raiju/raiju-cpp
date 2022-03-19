@@ -16,24 +16,24 @@ RadioService::RadioService()
 
 RadioService::Coordinate RadioService::coordinates() const {
     return Coordinate{
-        map<uint16_t, int8_t>(ppms[0].constrained_value(), PPM::min_value_ms, PPM::max_value_ms, -100, 100),
-        map<uint16_t, int8_t>(ppms[1].constrained_value(), PPM::min_value_ms, PPM::max_value_ms, -100, 100),
+        map<int16_t, int8_t>(ppms[0].constrained_value(), PPM::min_value_ms, PPM::max_value_ms, -100, 100),
+        map<int16_t, int8_t>(ppms[1].constrained_value(), PPM::min_value_ms, PPM::max_value_ms, -100, 100),
     };
 }
 
-int16_t RadioService::get_ch1() const {
+uint16_t RadioService::get_ch1() const {
     return ppms[0].constrained_value();
 }
 
-int16_t RadioService::get_ch2() const {
+uint16_t RadioService::get_ch2() const {
     return ppms[1].constrained_value();
 }
 
-int16_t RadioService::get_ch3() const {
+uint16_t RadioService::get_ch3() const {
     return ppms[2].constrained_value();
 }
 
-int16_t RadioService::get_ch4() const {
+uint16_t RadioService::get_ch4() const {
     return ppms[3].constrained_value();
 }
 

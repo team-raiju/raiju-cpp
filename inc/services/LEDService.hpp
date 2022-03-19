@@ -18,7 +18,7 @@ public:
     void led_stripe_reset();
     void led_stripe_send();
 
-    void test();
+    void purple_charge();
 
 private:
     WS2812 led_stripe;

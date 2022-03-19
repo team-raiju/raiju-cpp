@@ -30,13 +30,16 @@ void LEDService::led_stripe_send() {
     hal::mcu::sleep(100);
 }
 
-void LEDService::test() {
+void LEDService::purple_charge() {
     for (int i = 0; i < 16; i++) {
-        led_stripe.set_color(i, Color::white());
+        led_stripe.set_color(i, Color::purple());
         led_stripe.send();
 
-        hal::mcu::sleep(1000);
+        hal::mcu::sleep(100);
     }
+
+    led_stripe.reset_all();
+    led_stripe.send();
 }
 
 } // namespace raiju

@@ -1,5 +1,3 @@
-#include "utils.h"
-
 #include "FSM.hpp"
 
 namespace raiju {

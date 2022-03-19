@@ -14,4 +14,12 @@ void UART::transmit(uint8_t* data, size_t size, uint32_t timeout) {
     HAL_UART_Transmit(huart, data, size, timeout);
 }
 
+void UART::receive_dma(uint8_t* data, size_t size) {
+    HAL_UART_Receive_DMA(huart, data, size);
+}
+
+USART_TypeDef* UART::instance() const {
+    return huart->Instance;
+}
+
 } // namespace hal

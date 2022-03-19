@@ -69,6 +69,7 @@ add_executable(${EXECUTABLE}
     src/controllers/RCCheckState.cpp
 
     src/services/BuzzerService.cpp
+    src/services/BluetoothService.cpp
     src/services/DisplayService.cpp
     src/services/DistanceService.cpp
     src/services/DrivingService.cpp

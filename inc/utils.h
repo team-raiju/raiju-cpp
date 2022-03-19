@@ -14,17 +14,17 @@
 /**
  * @brief Returns x absolute value.
  */
-#define abs(x) ((x) > 0 ? (x) : (-x))
+// #define abs(x) ((x) > 0 ? (x) : (-x))
 
 /**
  * @brief Returns maximum value between x and y.
  */
-#define max(x, y) ((x) > (y) ? (x) : (y))
+// #define max(x, y) ((x) > (y) ? (x) : (y))
 
 /**
  * @brief Returns minimum value between x and y.
  */
-#define min(x, y) ((x) < (y) ? (x) : (y))
+// #define min(x, y) ((x) < (y) ? (x) : (y))
 
 /**
  * @brief Constrains v between x and y, returning at least x and at most y.

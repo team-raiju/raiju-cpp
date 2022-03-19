@@ -2,34 +2,28 @@
 
 #include "FSM.hpp"
 
+namespace mcu = hal::mcu;
+
 namespace raiju {
 
-// static int led_num = 0;
-
 void FSM::IdleState::enter(FSM* fsm) {
-    // for (int i = 0; i < 16; i++) {
-    //     fsm->leds.set_color(i, Color::white());
-    //     hal::mcu::sleep(1000);
-    // }
-    // fsm->s_led.test();
-    // fsm->s_buzzer.play_megalovania();
-    fsm->s_led.board_led_on();
+    fsm->s_bt.transmit("s:idle");
+    fsm->s_led.board_led_off();
 }
 
 void FSM::IdleState::cycle(FSM* fsm) {
-    for (int i = 0; i < 100; i++) {
-        fsm->s_driving.drive(i, i);
-        hal::mcu::sleep(100);
-    }
+    fsm->s_bt.transmit("s:idle");
+    fsm->s_led.toggle_board_led();
+    mcu::sleep(500);
 
-    for (int i = 100; i > -100; i--) {
-        fsm->s_driving.drive(i, i);
-        hal::mcu::sleep(100);
-    }
+    if (fsm->s_bt.data_available()) {
+        auto packet = fsm->s_bt.last_read_packet();
 
-    for (int i = -100; i < 0; i++) {
-        fsm->s_driving.drive(i, i);
-        hal::mcu::sleep(100);
+        if (packet.byte1 == 0x01) {
+            if (packet.byte2 == 0x01) {
+                fsm->set_state(RCState::instance());
+            }
+        }
     }
 }
 

@@ -1,8 +1,10 @@
+#include <algorithm>
+
 #include "utils.h"
 
 #include "DrivingService.hpp"
 
-#define COUNTER_PERIOD_MAX (100)
+#define COUNTER_PERIOD_MAX (1000)
 
 using hal::TIM, hal::GPIO;
 
@@ -25,11 +27,11 @@ void DrivingService::drive(int16_t left, int16_t right) {
     left = constrain(left, -99, 99);
     right = constrain(right, -99, 99);
 
-    if (abs(left) < 10) {
+    if (std::abs(left) < 10) {
         left = 0;
     }
 
-    if (abs(right) < 10) {
+    if (std::abs(right) < 10) {
         right = 0;
     }
 

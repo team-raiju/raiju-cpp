@@ -18,6 +18,11 @@ public:
     virtual void on_interrupt(ADC_HandleTypeDef* htim) = 0;
 };
 
+class uart_interruptible {
+public:
+    virtual void on_interrupt(UART_HandleTypeDef* huart) = 0;
+};
+
 typedef void (*exti_cb_fn)();
 
 void init();
@@ -26,6 +31,7 @@ void sleep(const uint32_t ms);
 void add_exti_interrupt(exti_interruptible* interruptible);
 void add_tim_interrupt(tim_interruptible* interruptible);
 void add_adc_interrupt(adc_interruptible* interruptible);
+void add_uart_interrupt(uart_interruptible* interruptible);
 
 } // namespace hal::mcu
 

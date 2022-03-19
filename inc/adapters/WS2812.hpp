@@ -21,6 +21,10 @@ struct Color {
     static Color white() {
         return Color{0xFF, 0xFF, 0xFF};
     }
+
+    static Color purple() {
+        return Color{0x00, 0x7F, 0x7F};
+    }
 };
 
 class WS2812 {

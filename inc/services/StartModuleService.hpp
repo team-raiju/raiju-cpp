@@ -6,12 +6,16 @@
 namespace raiju {
 
 class StartModuleService {
-// public:
-//     StartModuleService();
+public:
+    StartModuleService();
 
-// private:
-//     hal::GPIO enable;
-//     hal::GPIO reading;
+    bool is_start();
+
+    void reset();
+
+private:
+    hal::GPIO enable;
+    hal::GPIO reading;
 };
 
 } // namespace raiju

@@ -15,6 +15,7 @@ public:
     static ADCDMA& instance();
 
     void start();
+
     void calculate_readings_and_restart();
     uint32_t get_reading(size_t idx) const;
 

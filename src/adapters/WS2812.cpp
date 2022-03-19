@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "utils.h"
 
 #include "WS2812.hpp"
@@ -35,7 +37,7 @@ uint32_t Color::to_bits() const {
 }
 
 WS2812::WS2812(PWM pwm, uint8_t led_amount) : pwm(pwm) {
-    this->led_amount = min(led_amount, WS2812_MAX_LED_AMOUNT);
+    this->led_amount = std::min<uint8_t>(led_amount, WS2812_MAX_LED_AMOUNT);
 
     reset_all();
     send();

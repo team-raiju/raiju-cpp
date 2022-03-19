@@ -1,6 +1,18 @@
 #if !defined(__USART_HPP__)
 #define __USART_HPP__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart3;
+extern DMA_HandleTypeDef hdma_usart3_rx;
+
+#ifdef __cplusplus
+}
+#endif
+
 namespace hal {
 
 class UART {
@@ -9,6 +21,10 @@ public:
 
     void transmit(uint8_t byte, uint32_t timeout = 100);
     void transmit(uint8_t* data, size_t size, uint32_t timeout = 100);
+
+    void receive_dma(uint8_t* data, size_t size);
+
+    USART_TypeDef* instance() const;
 
 private:
     UART_HandleTypeDef* huart;
