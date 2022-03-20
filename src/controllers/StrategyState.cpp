@@ -57,39 +57,39 @@ void FSM::StrategyState::cycle(FSM* fsm) {
     if (fsm->strategy != 1) {
         if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
             fsm->s_driving.drive(-100, -100);
-            mcu::sleep(100); // TODO: Calibração desses valores de tempo de volta pras curvas
+            mcu::sleep(150); // TODO: Calibração desses valores de tempo de volta pras curvas
 
             int8_t mult = fsm->s_line.is_white(LineService::Position::FR1) ? -1 : 1;
-            fsm->s_driving.drive(75 * mult, -75 * mult);
-            mcu::sleep(100);
+            fsm->s_driving.drive(100 * mult, -100 * mult);
+            mcu::sleep(175);
         }
     }
 
-    if (fsm->strategy == 2) {
+    if (fsm->s_distance.is_reading(DIST_FRONT) ||
+        (fsm->s_distance.is_reading(DIST_BRIGHT) && fsm->s_distance.is_reading(DIST_BLEFT)) || fsm->strategy == 2) {
         fsm->s_driving.drive(100, 100);
+        still = false;
+    } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
+        fsm->s_driving.drive(100, 30);
+        still = false;
+    } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
+        fsm->s_driving.drive(30, 100);
+        still = false;
+    } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
+        fsm->s_driving.drive(100, -100);
+        still = false;
+    } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
+        fsm->s_driving.drive(-100, 100);
+        still = false;
+    } else if (fsm->strategy == 4) {
+        fsm->s_driving.drive(100, 100);
+        still = false;
     } else {
-        if (fsm->s_distance.is_reading(DIST_FRONT) || fsm->strategy == 4) {
-            fsm->s_driving.drive(100, 100);
-            still = false;
-        } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
-            fsm->s_driving.drive(100, 30);
-            still = false;
-        } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
-            fsm->s_driving.drive(30, 100);
-            still = false;
-        } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
-            fsm->s_driving.drive(100, -100);
-            still = false;
-        } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
-            fsm->s_driving.drive(-100, 100);
-            still = false;
-        } else {
-            if (!still) {
-                still = true;
-                ticker = mcu::get_tick();
-            }
-            fsm->s_driving.drive(0, 0);
+        if (!still) {
+            still = true;
+            ticker = mcu::get_tick();
         }
+        fsm->s_driving.drive(0, 0);
     }
 
     if (still && mcu::get_tick() - ticker >= 3000) {

@@ -37,18 +37,15 @@ void FSM::RCState::cycle(FSM* fsm) {
     auto mot1 = coords.y + coords.x;
     auto mot2 = coords.y - coords.x;
 
-    fsm->s_driving.drive(mot1, mot2);
-
-    if (fsm->s_bt.data_available()) {
-        auto packet = fsm->s_bt.last_read_packet();
-
-        if (packet.byte1 == 0x01) {
-            if (packet.byte2 == 0x02) {
-                fsm->set_state(IdleState::instance());
-                return;
-            }
+    if (fsm->s_radio.get_ch3() > 1500) {
+        if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
+            mot1 = mot2 = -100;
+        } else if (fsm->s_line.is_white(LineService::Position::BR) || fsm->s_line.is_white(LineService::Position::BL)) {
+            mot1 = mot2 = 100;
         }
     }
+
+    fsm->s_driving.drive(mot1, mot2);
 }
 
 void FSM::RCState::exit(FSM* fsm) {
