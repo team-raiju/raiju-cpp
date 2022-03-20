@@ -23,30 +23,20 @@ void FSM::SensorCheckState::cycle(FSM* fsm) {
     fsm->s_led.led_stripe_reset();
 
     if (ch3 < 1200) {
-        tester1 = 1;
-        for (int i = 0; i < 8; i++) {
-            fsm->s_led.led_stripe_set(i, Color{0, 127, 0});
-        }
+        fsm->strategy = 1; // TODO: Melhorar definição de estratégia em vez desse int
+        fsm->s_led.led_stripe_set_range(0, 7, Color{0, 127, 0});
     } else if (ch3 < 1400) {
-        tester1 = 2;
-        for (int i = 0; i < 8; i++) {
-            fsm->s_led.led_stripe_set(i, Color{0, 0, 127});
-        }
+        fsm->strategy = 2;
+        fsm->s_led.led_stripe_set_range(0, 7, Color{0, 0, 127});
     } else if (ch3 < 1600) {
-        tester1 = 3;
-        for (int i = 0; i < 8; i++) {
-            fsm->s_led.led_stripe_set(i, Color{127, 127, 0});
-        }
+        fsm->strategy = 3;
+        fsm->s_led.led_stripe_set_range(0, 7, Color{127, 127, 0});
     } else if (ch3 < 1800) {
-        tester1 = 4;
-        for (int i = 8; i < 16; i++) {
-            fsm->s_led.led_stripe_set(i, Color{0, 127, 0});
-        }
-    } else if (ch3 < 2000) {
-        tester1 = 5;
-        for (int i = 8; i < 16; i++) {
-            fsm->s_led.led_stripe_set(i, Color{0, 0, 127});
-        }
+        fsm->strategy = 4;
+        fsm->s_led.led_stripe_set_range(8, 15, Color{0, 127, 0});
+    } else if (ch3 <= 2000) {
+        fsm->strategy = 5;
+        fsm->s_led.led_stripe_set_range(8, 15, Color{0, 0, 127});
     }
 
     fsm->s_led.led_stripe_send();

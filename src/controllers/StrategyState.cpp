@@ -12,7 +12,9 @@ namespace mcu = hal::mcu;
 
 namespace raiju {
 
-static uint32_t ticker = 0;
+// TODO: isso deveria estar na classe, tirar a definição padrão State (o define) para poder colocar
+// esse tipo de variável privada
+static uint32_t ticker = 0; // TODO: Adapter > SoftTimer
 static uint32_t ticker_fail = 0;
 static bool still = false;
 static bool leaving = false;
@@ -24,15 +26,12 @@ void FSM::StrategyState::enter(FSM* fsm) {
     ticker = mcu::get_tick();
     ticker_fail = mcu::get_tick();
 
-    for (int i = 0; i < 16; i++) {
-        fsm->s_led.led_stripe_set(i, Color{127, 0, 0});
-    }
-
+    fsm->s_led.led_stripe_set_all(Color{127, 0, 0});
     fsm->s_led.led_stripe_send();
 }
 
 void FSM::StrategyState::cycle(FSM* fsm) {
-    // Leave via Star Module
+    // Leave via Start Module
     if (!fsm->s_smodule.is_start()) {
         fsm->set_state(IdleState::instance());
         return;
@@ -54,11 +53,11 @@ void FSM::StrategyState::cycle(FSM* fsm) {
         return;
     }
 
-    // Strategies
-    if (tester1 != 1) {
+    // Strategy
+    if (fsm->strategy != 1) {
         if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
             fsm->s_driving.drive(-100, -100);
-            mcu::sleep(100);
+            mcu::sleep(100); // TODO: Calibração desses valores de tempo de volta pras curvas
 
             int8_t mult = fsm->s_line.is_white(LineService::Position::FR1) ? -1 : 1;
             fsm->s_driving.drive(75 * mult, -75 * mult);
@@ -66,10 +65,10 @@ void FSM::StrategyState::cycle(FSM* fsm) {
         }
     }
 
-    if (tester1 == 2) {
+    if (fsm->strategy == 2) {
         fsm->s_driving.drive(100, 100);
     } else {
-        if (fsm->s_distance.is_reading(DIST_FRONT) || tester1 == 4) {
+        if (fsm->s_distance.is_reading(DIST_FRONT) || fsm->strategy == 4) {
             fsm->s_driving.drive(100, 100);
             still = false;
         } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {

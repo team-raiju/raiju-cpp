@@ -21,6 +21,18 @@ void LEDService::led_stripe_set(size_t idx, Color color) {
     led_stripe.set_color(idx, color);
 }
 
+void LEDService::led_stripe_set_range(size_t from, size_t to, Color color) {
+    for (int i = from; i <= to; i++) {
+        led_stripe.set_color(i, color);
+    }
+}
+
+void LEDService::led_stripe_set_all(Color color) {
+    for (int i = 0; i < 16; i++) {
+        led_stripe.set_color(i, color);
+    }
+}
+
 void LEDService::led_stripe_reset() {
     led_stripe.reset_all();
 }
@@ -37,7 +49,6 @@ void LEDService::purple_charge() {
 
         hal::mcu::sleep(100);
     }
-    
 }
 
 } // namespace raiju

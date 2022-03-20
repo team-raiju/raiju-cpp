@@ -70,6 +70,8 @@ private:
     hal::GPIO button;
 
     State* state;
+
+    uint8_t strategy = 0;
 };
 
 } // namespace raiju

@@ -31,22 +31,6 @@ void FSM::IdleState::cycle(FSM* fsm) {
         fsm->set_state(SensorCheckState::instance());
         return;
     }
-
-    if (fsm->s_bt.data_available()) {
-        auto packet = fsm->s_bt.last_read_packet();
-
-        if (packet.byte1 == 0x01) {
-            if (packet.byte2 == 0x01) {
-                fsm->set_state(RCState::instance());
-                return;
-            }
-
-            if (packet.byte2 == 0x02) {
-                fsm->set_state(AutoWaitState::instance());
-                return;
-            }
-        }
-    }
 }
 
 void FSM::IdleState::exit(FSM* fsm) {
