@@ -20,8 +20,9 @@ public:
 
     void purple_charge();
 
-private:
     WS2812 led_stripe;
+
+private:
     hal::GPIO led_board;
 };
 

@@ -37,9 +37,7 @@ void LEDService::purple_charge() {
 
         hal::mcu::sleep(100);
     }
-
-    led_stripe.reset_all();
-    led_stripe.send();
+    
 }
 
 } // namespace raiju

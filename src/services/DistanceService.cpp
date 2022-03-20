@@ -20,7 +20,7 @@ bool DistanceService::is_reading(uint8_t sensor) {
         return false;
     }
 
-    return this->sensors[sensor].is_active();
+    return !this->sensors[sensor - 1].is_active();
 }
 
 } // namespace raiju

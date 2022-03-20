@@ -2,7 +2,9 @@
 
 namespace raiju {
 
-StartModuleService::StartModuleService() : enable(GPIOB, hal::GPIO::Pin::p15), reading(GPIOA, hal::GPIO::Pin::p2) {}
+StartModuleService::StartModuleService() : enable(GPIOB, hal::GPIO::Pin::p15), reading(GPIOA, hal::GPIO::Pin::p2) {
+    enable.set();
+}
 
 bool StartModuleService::is_start() {
     return reading.is_active();

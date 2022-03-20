@@ -7,16 +7,26 @@ namespace raiju {
 
 class LineService {
 public:
-    static const int white_threshold = 500;
+    static const int white_threshold = 2500;
 
-    enum Position {
+    // enum Position : uint8_t {
+    //     Battery = 0, // Gambi
+    //     FR1 = 1,
+    //     BR = 2,
+    //     FL1 = 3,
+    //     BL = 4,
+    //     FR2 = 5,
+    //     FL2 = 6,
+    // };
+
+    enum Position : uint8_t {
         Battery = 0, // Gambi
-        FR1 = 1,
-        FR2 = 2,
-        FL1 = 3,
-        FL2 = 4,
-        BR = 5,
-        BL = 6,
+        FR1 = 3,     // ou 4,
+        BR = 5,      // ou 6,
+        FL1 = 2,
+        BL = 1,
+        FR2 = 4,
+        FL2 = 6,
     };
 
     LineService();

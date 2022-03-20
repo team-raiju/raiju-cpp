@@ -23,7 +23,7 @@ struct Color {
     }
 
     static Color purple() {
-        return Color{0x00, 0x7F, 0x7F};
+        return Color{0xFF, 0x00, 0x7F};
     }
 };
 

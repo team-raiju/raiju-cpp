@@ -43,6 +43,10 @@ void sleep(const uint32_t ms) {
     HAL_Delay(ms);
 }
 
+uint32_t get_tick() {
+    return HAL_GetTick();
+}
+
 void add_exti_interrupt(exti_interruptible* interruptible) {
     if (m_exti_amount >= 10) {
         return;

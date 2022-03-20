@@ -11,6 +11,7 @@ public:
 
     void play_tetris();
     void play_megalovania();
+    void beep(uint16_t duration = 50);
 
 private:
     PWM buzzer;

@@ -15,8 +15,8 @@ public:
     void stop();
 
 private:
-    PWM left_motor[2];
     PWM right_motor[2];
+    PWM left_motor[2];
 
     hal::GPIO _en;
 

@@ -9,10 +9,11 @@
 #include "BuzzerService.hpp"
 #include "DisplayService.hpp"
 #include "DistanceService.hpp"
-#include "LineService.hpp"
 #include "DrivingService.hpp"
 #include "LEDService.hpp"
+#include "LineService.hpp"
 #include "RadioService.hpp"
+#include "StartModuleService.hpp"
 
 #define declState(StateName)                                                                                           \
     class StateName : public State {                                                                                   \
@@ -62,7 +63,8 @@ private:
     RadioService s_radio;
     DrivingService s_driving;
     LEDService s_led;
-    // BuzzerService s_buzzer;
+    StartModuleService s_smodule;
+    BuzzerService s_buzzer;
     LineService s_line;
 
     hal::GPIO button;

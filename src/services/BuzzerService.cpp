@@ -199,4 +199,10 @@ void BuzzerService::play_megalovania() {
     buzzer.set(0);
 }
 
+void BuzzerService::beep(uint16_t duration) {
+    buzzer.set(50);
+    mcu::sleep(duration);
+    buzzer.set(0);
+}
+
 } // namespace raiju

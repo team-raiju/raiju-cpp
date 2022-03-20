@@ -11,13 +11,13 @@ using hal::TIM, hal::GPIO;
 namespace raiju {
 
 DrivingService::DrivingService()
-    : left_motor{
-          PWM(TIM(&htim1), TIM::Channel::ch1),
+    : right_motor{
           PWM(TIM(&htim1), TIM::Channel::ch2),
+          PWM(TIM(&htim1), TIM::Channel::ch1),
       },
-      right_motor{
-          PWM(TIM(&htim1), TIM::Channel::ch3),
+      left_motor{
           PWM(TIM(&htim1), TIM::Channel::ch4),
+          PWM(TIM(&htim1), TIM::Channel::ch3),
       },
       _en(GPIOA, GPIO::Pin::p13) {}
 

@@ -54,7 +54,6 @@ uint32_t ADCDMA::get_reading(size_t idx) const {
 
 void ADCDMA::on_interrupt(ADC_HandleTypeDef* hadc) {
     if (hadc->Instance == adc.instance()) {
-        tester1++;
         adc.stop_dma();
         reading_done = true;
     }

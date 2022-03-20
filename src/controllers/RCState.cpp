@@ -2,13 +2,34 @@
 
 #include "FSM.hpp"
 
+namespace mcu = hal::mcu;
+
 namespace raiju {
+
+static uint32_t ticker = 0;
+static bool leaving = false;
 
 void FSM::RCState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:rc");
+    ticker = mcu::get_tick();
 }
 
 void FSM::RCState::cycle(FSM* fsm) {
+    auto ch4 = fsm->s_radio.get_ch4();
+    if ((ch4 < 1250 || ch4 > 1750) && !leaving) {
+        ticker = mcu::get_tick();
+        leaving = true;
+    }
+
+    if (ch4 >= 1250 && ch4 <= 1750) {
+        leaving = false;
+    }
+
+    if (leaving && mcu::get_tick() - ticker >= 1000) {
+        fsm->set_state(IdleState::instance());
+        return;
+    }
+
     auto coords = fsm->s_radio.coordinates();
 
     auto mot1 = coords.y + coords.x;
@@ -22,13 +43,14 @@ void FSM::RCState::cycle(FSM* fsm) {
         if (packet.byte1 == 0x01) {
             if (packet.byte2 == 0x02) {
                 fsm->set_state(IdleState::instance());
+                return;
             }
         }
     }
 }
 
 void FSM::RCState::exit(FSM* fsm) {
-    fsm->s_driving.drive(0, 0);
+    fsm->s_driving.stop();
 }
 
 FSM::State& FSM::RCState::instance() {

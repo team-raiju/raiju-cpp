@@ -28,6 +28,8 @@ typedef void (*exti_cb_fn)();
 void init();
 void sleep(const uint32_t ms);
 
+uint32_t get_tick();
+
 void add_exti_interrupt(exti_interruptible* interruptible);
 void add_tim_interrupt(tim_interruptible* interruptible);
 void add_adc_interrupt(adc_interruptible* interruptible);
