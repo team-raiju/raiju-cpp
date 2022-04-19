@@ -22,7 +22,7 @@ void LEDService::led_stripe_set(size_t idx, Color color) {
 }
 
 void LEDService::led_stripe_set_range(size_t from, size_t to, Color color) {
-    for (int i = from; i <= to; i++) {
+    for (size_t i = from; i <= to; i++) {
         led_stripe.set_color(i, color);
     }
 }
