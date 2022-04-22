@@ -15,16 +15,16 @@ void FSM::InitState::enter(FSM* fsm) {
     // fsm->s_buzzer.play_megalovania();
 
     // fsm->s_led.purple_charge();
-    for (int i = 0; i < 16; i++) {
-        fsm->s_led.led_stripe.set_color(i, Color::purple());
-        fsm->s_led.led_stripe.send();
+    // for (int i = 0; i < 16; i++) {
+    //     fsm->s_led.led_stripe.set_color(i, Color::purple());
+    //     fsm->s_led.led_stripe.send();
 
-        fsm->s_buzzer.beep(42);
-        hal::mcu::sleep(42);
-    }
+    //     fsm->s_buzzer.beep(42);
+    //     hal::mcu::sleep(42);
+    // }
 
-    hal::mcu::sleep(200);
-    fsm->s_buzzer.beep(600);
+    // hal::mcu::sleep(200);
+    // fsm->s_buzzer.beep(600);
 }
 
 void FSM::InitState::cycle(FSM* fsm) {
