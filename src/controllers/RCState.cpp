@@ -2,6 +2,12 @@
 
 #include "FSM.hpp"
 
+#define DIST_RIGHT 5
+#define DIST_BRIGHT 6
+#define DIST_FRONT 7
+#define DIST_BLEFT 8
+#define DIST_LEFT 9
+
 namespace mcu = hal::mcu;
 
 namespace raiju {
@@ -37,7 +43,35 @@ void FSM::RCState::cycle(FSM* fsm) {
     auto mot1 = coords.y + coords.x;
     auto mot2 = coords.y - coords.x;
 
-    if (fsm->s_radio.get_ch3() > 1500) {
+    if (fsm->s_radio.get_ch3() > 1800 && coords.y > 60) {
+        if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
+            fsm->s_driving.drive(-100, -100);
+            mcu::sleep(150); // TODO: Calibração desses valores de tempo de volta pras curvas
+
+            int8_t mult = fsm->s_line.is_white(LineService::Position::FR1) ? -1 : 1;
+            fsm->s_driving.drive(75 * mult, -75 * mult);
+            mcu::sleep(100);
+        }
+
+        if (fsm->s_distance.is_reading(DIST_FRONT) ||
+            (fsm->s_distance.is_reading(DIST_BRIGHT) && fsm->s_distance.is_reading(DIST_BLEFT))) {
+            mot1 = mot2 = 100;
+        } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
+            mot1 = 75;
+            mot2 = 30;
+        } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
+            mot1 = 30;
+            mot2 = 75;
+        } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
+            mot1 = 75;
+            mot2 = -75;
+        } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
+            mot1 = -75;
+            mot2 = 75;
+        } else {
+            mot1 = mot2 = 60;
+        }
+    } else if (fsm->s_radio.get_ch3() > 1500) {
         if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
             mot1 = mot2 = -100;
         } else if (fsm->s_line.is_white(LineService::Position::BR) || fsm->s_line.is_white(LineService::Position::BL)) {
