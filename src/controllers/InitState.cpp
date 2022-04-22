@@ -6,6 +6,8 @@ namespace mcu = hal::mcu;
 
 namespace raiju {
 
+FSM::InitState::InitState() {}
+
 void FSM::InitState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:init");
 

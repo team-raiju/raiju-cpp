@@ -6,7 +6,9 @@ namespace mcu = hal::mcu;
 
 namespace raiju {
 
-static bool test = true;
+FSM::IdleState::IdleState() {
+    this->start_led = true;
+}
 
 void FSM::IdleState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:idle");
@@ -30,8 +32,8 @@ void FSM::IdleState::cycle(FSM* fsm) {
         return;
     }
 
-    if (test) {
-        test = false;
+    if (this->start_led) {
+        this->start_led = false;
 
         for (int i = 0; i < 16; i++) {
             fsm->s_led.led_stripe.set_color(i, Color::purple());

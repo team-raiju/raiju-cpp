@@ -12,10 +12,10 @@ namespace mcu = hal::mcu;
 
 namespace raiju {
 
-// TODO: isso deveria estar na classe, tirar a definição padrão State (o define) para poder colocar
-// esse tipo de variável privada
-static uint32_t ticker = 0; // TODO: Adapter > SoftTimer
-static bool leaving = false;
+FSM::RCState::RCState() {
+    this->ticker = 0;
+    this->leaving = false;
+}
 
 void FSM::RCState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:rc");
