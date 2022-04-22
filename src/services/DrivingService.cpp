@@ -5,6 +5,7 @@
 #include "DrivingService.hpp"
 
 #define COUNTER_PERIOD_MAX (1000)
+#define MAX_SPEED 100
 
 using hal::TIM, hal::GPIO;
 
@@ -35,8 +36,8 @@ void DrivingService::drive(int16_t left, int16_t right) {
         right = 0;
     }
 
-    left = map<int16_t, int16_t>(left, -100, 100, -COUNTER_PERIOD_MAX, COUNTER_PERIOD_MAX);
-    right = map<int16_t, int16_t>(right, -100, 100, -COUNTER_PERIOD_MAX, COUNTER_PERIOD_MAX);
+    left = map<int16_t, int16_t>(left, -MAX_SPEED, MAX_SPEED, -COUNTER_PERIOD_MAX, COUNTER_PERIOD_MAX);
+    right = map<int16_t, int16_t>(right, -MAX_SPEED, MAX_SPEED, -COUNTER_PERIOD_MAX, COUNTER_PERIOD_MAX);
 
     set_motor(left_motor, left);
     set_motor(right_motor, right);
