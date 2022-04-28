@@ -8,6 +8,8 @@ namespace raiju {
 
 static uint32_t tick = 0;
 
+FSM::AutoWaitState::AutoWaitState() {}
+
 void FSM::AutoWaitState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:autowait");
     tick = mcu::get_tick();

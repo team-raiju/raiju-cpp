@@ -12,12 +12,12 @@ namespace mcu = hal::mcu;
 
 namespace raiju {
 
-// TODO: isso deveria estar na classe, tirar a definição padrão State (o define) para poder colocar
-// esse tipo de variável privada
-static uint32_t ticker = 0; // TODO: Adapter > SoftTimer
-static uint32_t ticker_fail = 0;
-static bool still = false;
-static bool leaving = false;
+FSM::StrategyState::StrategyState() {
+    this->ticker = 0;
+    this->ticker_fail = 0;
+    this->still = false;
+    this->leaving = false;
+}
 
 void FSM::StrategyState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:strategy");
@@ -60,29 +60,33 @@ void FSM::StrategyState::cycle(FSM* fsm) {
             mcu::sleep(150); // TODO: Calibração desses valores de tempo de volta pras curvas
 
             int8_t mult = fsm->s_line.is_white(LineService::Position::FR1) ? -1 : 1;
-            fsm->s_driving.drive(100 * mult, -100 * mult);
-            mcu::sleep(175);
+            fsm->s_driving.drive(75 * mult, -75 * mult);
+            mcu::sleep(100);
         }
     }
 
     if (fsm->s_distance.is_reading(DIST_FRONT) ||
         (fsm->s_distance.is_reading(DIST_BRIGHT) && fsm->s_distance.is_reading(DIST_BLEFT)) || fsm->strategy == 2) {
-        fsm->s_driving.drive(100, 100);
+        if (fsm->strategy == 2) {
+            fsm->s_driving.drive(60, 60);
+        } else {
+            fsm->s_driving.drive(100, 100);
+        }
         still = false;
     } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
-        fsm->s_driving.drive(100, 30);
+        fsm->s_driving.drive(75, 30);
         still = false;
     } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
-        fsm->s_driving.drive(30, 100);
+        fsm->s_driving.drive(30, 75);
         still = false;
     } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
-        fsm->s_driving.drive(100, -100);
+        fsm->s_driving.drive(75, -75);
         still = false;
     } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
-        fsm->s_driving.drive(-100, 100);
+        fsm->s_driving.drive(-75, 75);
         still = false;
     } else if (fsm->strategy == 4) {
-        fsm->s_driving.drive(100, 100);
+        fsm->s_driving.drive(60, 60);
         still = false;
     } else {
         if (!still) {

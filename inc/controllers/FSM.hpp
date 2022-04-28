@@ -15,7 +15,7 @@
 #include "RadioService.hpp"
 #include "StartModuleService.hpp"
 
-#define declState(StateName)                                                                                           \
+#define declState(StateName, extras)                                                                                   \
     class StateName : public State {                                                                                   \
     public:                                                                                                            \
         void enter(FSM* fsm);                                                                                          \
@@ -25,7 +25,8 @@
         ~StateName();                                                                                                  \
                                                                                                                        \
     private:                                                                                                           \
-        StateName() {}                                                                                                 \
+        StateName();                                                                                                   \
+        extras                                                                                                         \
     }
 
 namespace raiju {
@@ -40,13 +41,13 @@ public:
         virtual ~State() {}
     };
 
-    declState(InitState);
-    declState(IdleState);
-    declState(AutoWaitState);
-    declState(StrategyState);
-    declState(RCCheckState);
-    declState(RCState);
-    declState(SensorCheckState);
+    declState(InitState, );
+    declState(IdleState, bool start_led;);
+    declState(AutoWaitState, );
+    declState(StrategyState, uint32_t ticker; uint32_t ticker_fail; bool still; bool leaving;);
+    declState(RCCheckState, );
+    declState(RCState, uint32_t ticker; bool leaving;);
+    declState(SensorCheckState, );
 
 public:
     FSM();

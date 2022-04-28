@@ -8,6 +8,8 @@
 
 namespace raiju {
 
+FSM::SensorCheckState::SensorCheckState() {}
+
 void FSM::SensorCheckState::enter(FSM* fsm) {
     fsm->s_bt.transmit("s:scheck");
     fsm->s_driving.stop();
