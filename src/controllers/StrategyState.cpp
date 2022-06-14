@@ -17,6 +17,7 @@ FSM::StrategyState::StrategyState() {
     this->ticker_fail = 0;
     this->still = false;
     this->leaving = false;
+    this->ran_initial = false;
 }
 
 void FSM::StrategyState::enter(FSM* fsm) {
@@ -25,6 +26,7 @@ void FSM::StrategyState::enter(FSM* fsm) {
 
     ticker = mcu::get_tick();
     ticker_fail = mcu::get_tick();
+    ran_initial = false;
 
     fsm->s_led.led_stripe_set_all(Color{127, 0, 0});
     fsm->s_led.led_stripe_send();
@@ -52,6 +54,13 @@ void FSM::StrategyState::cycle(FSM* fsm) {
         fsm->set_state(IdleState::instance());
         return;
     }
+
+    if (!ran_initial) {
+        ran_initial = true;
+        fsm->run_start_strategy();
+    }
+
+    fsm->run_round_strategy();
 
     // Strategy
     // if (fsm->round_strategy_idx != 1) {

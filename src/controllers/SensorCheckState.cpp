@@ -25,10 +25,10 @@ void FSM::SensorCheckState::cycle(FSM* fsm) {
     fsm->s_led.led_stripe_reset();
 
     if (ch3 < 1200) {
-        fsm->round_strategy_idx = &StarStrategy::instance();
+        fsm->set_round_strategy(StarStrategy::instance());
         fsm->s_led.led_stripe_set_range(0, 7, Color{0, 127, 0});
     } else if (ch3 < 1400) {
-        fsm->round_strategy_idx = &SmallStepsStrategy::instance();
+        fsm->set_round_strategy(SmallStepsStrategy::instance());
         fsm->s_led.led_stripe_set_range(0, 7, Color{0, 0, 127});
     }
     // else if (ch3 < 1600) {
