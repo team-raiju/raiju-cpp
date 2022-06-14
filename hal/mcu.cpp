@@ -6,9 +6,6 @@ extern "C" {
 void SystemClock_Config(void);
 }
 
-uint32_t tester1 = 0;
-uint32_t tester2 = 0;
-
 namespace hal::mcu {
 
 static uint8_t m_exti_amount = 0;

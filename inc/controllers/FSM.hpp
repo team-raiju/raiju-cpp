@@ -5,6 +5,8 @@
 
 #include "WS2812.hpp"
 
+#include "Strategy.hpp"
+
 #include "BluetoothService.hpp"
 #include "BuzzerService.hpp"
 #include "DisplayService.hpp"
@@ -72,7 +74,11 @@ private:
 
     State* state;
 
-    uint8_t strategy = 0;
+    Strategy* start_strategy_idx = nullptr;
+    StrategyParams start_strategy_params;
+
+    Strategy* round_strategy_idx = nullptr;
+    StrategyParams round_strategy_params;
 };
 
 } // namespace raiju

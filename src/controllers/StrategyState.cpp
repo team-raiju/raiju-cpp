@@ -54,53 +54,54 @@ void FSM::StrategyState::cycle(FSM* fsm) {
     }
 
     // Strategy
-    if (fsm->strategy != 1) {
-        if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
-            fsm->s_driving.drive(-100, -100);
-            mcu::sleep(150); // TODO: Calibração desses valores de tempo de volta pras curvas
+    // if (fsm->round_strategy_idx != 1) {
+    //     if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
+    //         fsm->s_driving.drive(-100, -100);
+    //         mcu::sleep(150); // TODO: Calibração desses valores de tempo de volta pras curvas
 
-            int8_t mult = fsm->s_line.is_white(LineService::Position::FR1) ? -1 : 1;
-            fsm->s_driving.drive(75 * mult, -75 * mult);
-            mcu::sleep(100);
-        }
-    }
+    //         int8_t mult = fsm->s_line.is_white(LineService::Position::FR1) ? -1 : 1;
+    //         fsm->s_driving.drive(75 * mult, -75 * mult);
+    //         mcu::sleep(100);
+    //     }
+    // }
 
-    if (fsm->s_distance.is_reading(DIST_FRONT) ||
-        (fsm->s_distance.is_reading(DIST_BRIGHT) && fsm->s_distance.is_reading(DIST_BLEFT)) || fsm->strategy == 2) {
-        if (fsm->strategy == 2) {
-            fsm->s_driving.drive(60, 60);
-        } else {
-            fsm->s_driving.drive(100, 100);
-        }
-        still = false;
-    } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
-        fsm->s_driving.drive(75, 30);
-        still = false;
-    } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
-        fsm->s_driving.drive(30, 75);
-        still = false;
-    } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
-        fsm->s_driving.drive(75, -75);
-        still = false;
-    } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
-        fsm->s_driving.drive(-75, 75);
-        still = false;
-    } else if (fsm->strategy == 4) {
-        fsm->s_driving.drive(60, 60);
-        still = false;
-    } else {
-        if (!still) {
-            still = true;
-            ticker = mcu::get_tick();
-        }
-        fsm->s_driving.drive(0, 0);
-    }
+    // if (fsm->s_distance.is_reading(DIST_FRONT) ||
+    //     (fsm->s_distance.is_reading(DIST_BRIGHT) && fsm->s_distance.is_reading(DIST_BLEFT)) ||
+    //     fsm->round_strategy_idx == 2) {
+    //     if (fsm->round_strategy_idx == 2) {
+    //         fsm->s_driving.drive(60, 60);
+    //     } else {
+    //         fsm->s_driving.drive(100, 100);
+    //     }
+    //     still = false;
+    // } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
+    //     fsm->s_driving.drive(75, 30);
+    //     still = false;
+    // } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
+    //     fsm->s_driving.drive(30, 75);
+    //     still = false;
+    // } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
+    //     fsm->s_driving.drive(75, -75);
+    //     still = false;
+    // } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
+    //     fsm->s_driving.drive(-75, 75);
+    //     still = false;
+    // } else if (fsm->round_strategy_idx == 4) {
+    //     fsm->s_driving.drive(60, 60);
+    //     still = false;
+    // } else {
+    //     if (!still) {
+    //         still = true;
+    //         ticker = mcu::get_tick();
+    //     }
+    //     fsm->s_driving.drive(0, 0);
+    // }
 
-    if (still && mcu::get_tick() - ticker >= 3000) {
-        still = false;
-        fsm->s_driving.drive(50, 50);
-        mcu::sleep(100);
-    }
+    // if (still && mcu::get_tick() - ticker >= 3000) {
+    //     still = false;
+    //     fsm->s_driving.drive(50, 50);
+    //     mcu::sleep(100);
+    // }
 }
 
 void FSM::StrategyState::exit(FSM* fsm) {

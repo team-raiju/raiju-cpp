@@ -77,6 +77,9 @@ add_executable(${EXECUTABLE}
     src/services/LineService.cpp
     src/services/RadioService.cpp
     src/services/StartModuleService.cpp
+
+    src/strategies/StarStrategy.cpp
+    src/strategies/SmallStepsStrategy.cpp
 )
 
 target_compile_definitions(${EXECUTABLE} PRIVATE
@@ -100,6 +103,7 @@ target_include_directories(${EXECUTABLE} PRIVATE
     inc/adapters
     inc/controllers
     inc/services
+    inc/strategies
 )
 
 target_compile_options(${EXECUTABLE} PRIVATE

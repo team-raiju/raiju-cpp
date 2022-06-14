@@ -25,21 +25,22 @@ void FSM::SensorCheckState::cycle(FSM* fsm) {
     fsm->s_led.led_stripe_reset();
 
     if (ch3 < 1200) {
-        fsm->strategy = 1; // TODO: Melhorar definição de estratégia em vez desse int
+        fsm->round_strategy_idx = &StarStrategy::instance();
         fsm->s_led.led_stripe_set_range(0, 7, Color{0, 127, 0});
     } else if (ch3 < 1400) {
-        fsm->strategy = 2;
+        fsm->round_strategy_idx = &SmallStepsStrategy::instance();
         fsm->s_led.led_stripe_set_range(0, 7, Color{0, 0, 127});
-    } else if (ch3 < 1600) {
-        fsm->strategy = 3;
-        fsm->s_led.led_stripe_set_range(0, 7, Color{127, 127, 0});
-    } else if (ch3 < 1800) {
-        fsm->strategy = 4;
-        fsm->s_led.led_stripe_set_range(8, 15, Color{0, 127, 0});
-    } else if (ch3 <= 2000) {
-        fsm->strategy = 5;
-        fsm->s_led.led_stripe_set_range(8, 15, Color{0, 0, 127});
     }
+    // else if (ch3 < 1600) {
+    //     fsm->round_strategy_idx = 3;
+    //     fsm->s_led.led_stripe_set_range(0, 7, Color{127, 127, 0});
+    // } else if (ch3 < 1800) {
+    //     fsm->round_strategy_idx = 4;
+    //     fsm->s_led.led_stripe_set_range(8, 15, Color{0, 127, 0});
+    // } else if (ch3 <= 2000) {
+    //     fsm->round_strategy_idx = 5;
+    //     fsm->s_led.led_stripe_set_range(8, 15, Color{0, 0, 127});
+    // }
 
     fsm->s_led.led_stripe_send();
 
