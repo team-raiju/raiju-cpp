@@ -1,6 +1,14 @@
 #include "FSM.hpp"
+#include "config.hpp"
+#include "utils.h"
 
 namespace raiju {
+
+static Strategy* strategies[] = {
+    nullptr,
+    &SmallStepsStrategy::instance(),
+    &StarStrategy::instance(),
+};
 
 FSM::FSM() : button(GPIOC, hal::GPIO::Pin::p15) {
     state = &InitState::instance();
@@ -11,6 +19,7 @@ void FSM::init() {
 }
 
 void FSM::cycle() {
+    process_bt();
     this->state->cycle(this);
 }
 
@@ -20,24 +29,69 @@ void FSM::set_state(State& state) {
     this->state->enter(this);
 }
 
-void FSM::set_start_strategy(Strategy& strategy) {
-    this->start_strategy = &strategy;
-}
-
-void FSM::set_round_strategy(Strategy& strategy) {
-    this->round_strategy = &strategy;
-}
-
 void FSM::run_start_strategy() {
     if (this->start_strategy != nullptr) {
-        this->start_strategy->run(this, this->start_strategy_params);
+        this->start_strategy->run(this);
     }
 }
 
 void FSM::run_round_strategy() {
     if (this->round_strategy != nullptr) {
-        this->round_strategy->run(this, this->round_strategy_params);
+        this->round_strategy->run(this);
     }
+}
+
+void FSM::process_bt() {
+    if (!this->s_bt.data_available()) {
+        return;
+    }
+
+    auto packet = this->s_bt.last_read_packet();
+
+    config::enabledDistanceSensors = packet.enabledDistanceSensors;
+    config::enabledLineSensors = packet.enabledLineSensors;
+    config::maxMotorSpeed = packet.maxMotorSpeed;
+    config::reverseSpeed = packet.reverseSpeed;
+    config::reverseTimeMs = packet.reverseTimeMs;
+    config::turnSpeed = packet.turnSpeed;
+    config::turnTimeMs = packet.turnTimeMs;
+    config::stepWaitTimeMs = packet.stepWaitTimeMs;
+
+    if (packet.strategy < len(strategies)) {
+        this->round_strategy_idx = packet.strategy;
+        this->round_strategy = strategies[this->round_strategy_idx];
+    }
+
+    if (packet.preStrategy < len(strategies)) {
+        this->start_strategy_idx = packet.preStrategy;
+        this->start_strategy = strategies[this->start_strategy_idx];
+    }
+
+    report_config();
+}
+
+void FSM::report_config() {
+    char buffer[20];
+
+    snprintf(buffer, 20, "str:%d:%d", this->start_strategy_idx, this->round_strategy_idx);
+    this->s_bt.transmit(buffer);
+    hal::mcu::sleep(10);
+
+    snprintf(buffer, 20, "mms:%d", config::maxMotorSpeed);
+    this->s_bt.transmit(buffer);
+    hal::mcu::sleep(10);
+
+    snprintf(buffer, 20, "rev:%d:%d", config::reverseSpeed, config::reverseTimeMs);
+    this->s_bt.transmit(buffer);
+    hal::mcu::sleep(10);
+
+    snprintf(buffer, 20, "turn:%d:%d", config::turnSpeed, config::turnTimeMs);
+    this->s_bt.transmit(buffer);
+    hal::mcu::sleep(10);
+
+    snprintf(buffer, 20, "step:%d", config::stepWaitTimeMs);
+    this->s_bt.transmit(buffer);
+    hal::mcu::sleep(10);
 }
 
 } // namespace raiju

@@ -34,6 +34,9 @@
 namespace raiju {
 
 class FSM {
+    friend class SmallStepsStrategy;
+    friend class StarStrategy;
+
 public:
     class State {
     public:
@@ -46,9 +49,9 @@ public:
     declState(InitState, );
     declState(IdleState, bool start_led;);
     declState(AutoWaitState, );
-    declState(StrategyState, uint32_t ticker; uint32_t ticker_fail; bool still; bool leaving; bool ran_initial;);
+    declState(StrategyState, Ticker leaveTicker; bool leaving; bool ran_initial;);
     declState(RCCheckState, );
-    declState(RCState, uint32_t ticker; bool leaving;);
+    declState(RCState, Ticker leaveTicker; bool leaving;);
     declState(SensorCheckState, );
 
 public:
@@ -59,8 +62,8 @@ public:
 
     void set_state(State& state);
 
-    void set_start_strategy(Strategy& strategy);
-    void set_round_strategy(Strategy& strategy);
+    // void set_start_strategy(Strategy& strategy);
+    // void set_round_strategy(Strategy& strategy);
 
     void run_start_strategy();
     void run_round_strategy();
@@ -81,10 +84,13 @@ private:
     State* state;
 
     Strategy* start_strategy = nullptr;
-    StrategyParams start_strategy_params;
-
     Strategy* round_strategy = nullptr;
-    StrategyParams round_strategy_params;
+
+    uint8_t start_strategy_idx = 0;
+    uint8_t round_strategy_idx = 0;
+
+    void process_bt();
+    void report_config();
 };
 
 } // namespace raiju

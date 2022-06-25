@@ -7,12 +7,23 @@
 
 namespace raiju {
 
+#define PACKET_SIZE 12
+
 class BluetoothService : public hal::mcu::uart_interruptible {
 public:
-    struct Packet {
-        uint8_t byte1;
-        uint8_t byte2;
-        uint8_t byte3;
+    union Packet {
+        uint8_t _header;
+        uint8_t enabledDistanceSensors;
+        uint8_t enabledLineSensors;
+        uint8_t reverseSpeed;
+        uint8_t reverseTimeMs;
+        uint8_t turnSpeed;
+        uint8_t turnTimeMs;
+        uint8_t stepWaitTimeMs;
+        uint8_t preStrategy;
+        uint8_t strategy;
+        uint8_t maxMotorSpeed;
+        uint8_t _chk;
     };
 
     BluetoothService();
@@ -29,7 +40,7 @@ private:
     hal::UART uart;
 
     bool _data_available;
-    uint8_t dma_data[3];
+    uint8_t dma_data[PACKET_SIZE];
 };
 
 } // namespace raiju

@@ -2,30 +2,23 @@
 
 #include "FSM.hpp"
 
-#define DIST_RIGHT 5
-#define DIST_BRIGHT 6
-#define DIST_FRONT 7
-#define DIST_BLEFT 8
-#define DIST_LEFT 9
-
 namespace mcu = hal::mcu;
 
 namespace raiju {
 
-FSM::RCState::RCState() {
-    this->ticker = 0;
+FSM::RCState::RCState() : leaveTicker(1000) {
     this->leaving = false;
 }
 
 void FSM::RCState::enter(FSM* fsm) {
-    fsm->s_bt.transmit("s:rc");
-    ticker = mcu::get_tick();
+    fsm->s_bt.transmit("state:RC");
+    leaveTicker.reset();
 }
 
 void FSM::RCState::cycle(FSM* fsm) {
     auto ch4 = fsm->s_radio.get_ch4();
     if ((ch4 < 1250 || ch4 > 1750) && !leaving) {
-        ticker = mcu::get_tick();
+        leaveTicker.reset();
         leaving = true;
     }
 
@@ -33,7 +26,7 @@ void FSM::RCState::cycle(FSM* fsm) {
         leaving = false;
     }
 
-    if (leaving && mcu::get_tick() - ticker >= 1000) {
+    if (leaving && leaveTicker.expired()) {
         fsm->set_state(IdleState::instance());
         return;
     }
@@ -53,19 +46,20 @@ void FSM::RCState::cycle(FSM* fsm) {
             mcu::sleep(100);
         }
 
-        if (fsm->s_distance.is_reading(DIST_FRONT) ||
-            (fsm->s_distance.is_reading(DIST_BRIGHT) && fsm->s_distance.is_reading(DIST_BLEFT))) {
+        if (fsm->s_distance.is_reading(DistanceService::Position::FRONT) ||
+            (fsm->s_distance.is_reading(DistanceService::Position::BRIGHT) &&
+             fsm->s_distance.is_reading(DistanceService::Position::BLEFT))) {
             mot1 = mot2 = 100;
-        } else if (fsm->s_distance.is_reading(DIST_BRIGHT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::BRIGHT)) {
             mot1 = 75;
             mot2 = 30;
-        } else if (fsm->s_distance.is_reading(DIST_BLEFT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::BLEFT)) {
             mot1 = 30;
             mot2 = 75;
-        } else if (fsm->s_distance.is_reading(DIST_RIGHT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::RIGHT)) {
             mot1 = 75;
             mot2 = -75;
-        } else if (fsm->s_distance.is_reading(DIST_LEFT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::LEFT)) {
             mot1 = -75;
             mot2 = 75;
         } else {

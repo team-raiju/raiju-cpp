@@ -9,7 +9,7 @@ namespace raiju {
 FSM::InitState::InitState() {}
 
 void FSM::InitState::enter(FSM* fsm) {
-    fsm->s_bt.transmit("s:init");
+    fsm->s_bt.transmit("state:INIT");
 
     fsm->s_driving.stop();
     fsm->s_line.start();

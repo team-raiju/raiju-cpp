@@ -1,5 +1,5 @@
-#if !defined(__USART_HPP__)
-#define __USART_HPP__
+#if !defined(__LIB_USART_HPP__)
+#define __LIB_USART_HPP__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,4 +32,4 @@ private:
 
 } // namespace hal
 
-#endif // __USART_HPP__
+#endif // __LIB_USART_HPP__

@@ -9,16 +9,7 @@ class LineService {
 public:
     static const int white_threshold = 2500;
 
-    // enum Position : uint8_t {
-    //     Battery = 0, // Gambi
-    //     FR1 = 1,
-    //     BR = 2,
-    //     FL1 = 3,
-    //     BL = 4,
-    //     FR2 = 5,
-    //     FL2 = 6,
-    // };
-
+    // Position in the ADC array, depends on physical connection
     enum Position : uint8_t {
         Battery = 0, // Gambi
         FR1 = 3,     // ou 4,
@@ -28,6 +19,9 @@ public:
         FR2 = 4,
         FL2 = 6,
     };
+
+    // Maps a Position (array index) to a mask for config::enabledLineSensors
+    static const uint8_t configMask[];
 
     LineService();
 

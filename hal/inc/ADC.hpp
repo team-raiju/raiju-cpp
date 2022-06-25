@@ -1,5 +1,5 @@
-#if !defined(__ADC_HPP__)
-#define __ADC_HPP__
+#if !defined(__LIB_ADC_HPP__)
+#define __LIB_ADC_HPP__
 
 #include "main.h"
 
@@ -31,4 +31,4 @@ private:
 
 } // namespace hal
 
-#endif // __ADC_HPP__
+#endif // __LIB_ADC_HPP__

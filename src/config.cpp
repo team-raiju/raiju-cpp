@@ -1,0 +1,14 @@
+#include "config.hpp"
+
+namespace raiju::config {
+
+uint8_t enabledDistanceSensors = 0xFF;
+uint8_t enabledLineSensors = 0xFF;
+uint8_t reverseSpeed = 100;
+uint8_t reverseTimeMs = 50;
+uint8_t turnSpeed = 100;
+uint8_t turnTimeMs = 50;
+uint8_t stepWaitTimeMs = 100;
+uint8_t maxMotorSpeed = 100;
+
+} // namespace raiju::config

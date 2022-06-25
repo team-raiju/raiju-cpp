@@ -40,7 +40,13 @@ BluetoothService::Packet BluetoothService::last_read_packet() {
 
 void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
     if (huart->Instance == uart.instance()) {
-        _data_available = true;
+        uint8_t chk = 0;
+
+        for (int i = 0; i < PACKET_SIZE - 1; i++) {
+            chk ^= dma_data[i];
+        }
+
+        _data_available = chk == dma_data[PACKET_SIZE - 1];
     }
 }
 

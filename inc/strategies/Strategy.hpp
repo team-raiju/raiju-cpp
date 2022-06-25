@@ -1,12 +1,12 @@
 #if !defined(__STRATEGY_HPP__)
 #define __STRATEGY_HPP__
 
-#include "StrategyParams.hpp"
+#include "Ticker.hpp"
 
 #define declStrategy(StrategyName, extras)                                                                             \
     class StrategyName : public Strategy {                                                                             \
     public:                                                                                                            \
-        void run(FSM* fsm, StrategyParams const& params);                                                              \
+        void run(FSM* fsm);                                                                                            \
         static Strategy& instance();                                                                                   \
         ~StrategyName();                                                                                               \
                                                                                                                        \
@@ -24,12 +24,12 @@ protected:
     Strategy() {}
 
 public:
-    virtual void run(FSM* fsm, StrategyParams const& params) = 0;
+    virtual void run(FSM* fsm) = 0;
 
-    virtual ~Strategy() {};
+    virtual ~Strategy(){};
 };
 
-declStrategy(SmallStepsStrategy, );
+declStrategy(SmallStepsStrategy, bool still; Ticker stepTicker;);
 declStrategy(StarStrategy, );
 
 }

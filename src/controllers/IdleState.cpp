@@ -11,7 +11,7 @@ FSM::IdleState::IdleState() {
 }
 
 void FSM::IdleState::enter(FSM* fsm) {
-    fsm->s_bt.transmit("s:idle");
+    fsm->s_bt.transmit("state:IDLE");
     fsm->s_led.board_led_off();
     fsm->s_driving.stop();
 }
@@ -28,7 +28,7 @@ void FSM::IdleState::cycle(FSM* fsm) {
     }
 
     if (ch4 > 1750) {
-        fsm->set_state(SensorCheckState::instance());
+        fsm->set_state(AutoWaitState::instance());
         return;
     }
 

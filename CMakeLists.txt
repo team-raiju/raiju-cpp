@@ -53,11 +53,13 @@ add_executable(${EXECUTABLE}
     ${STM32CUBE_GENERATED_FILES}
     ${HAL_FILES}
     src/main.cpp
+    src/config.cpp
 
     src/adapters/ADCDMA.cpp
     src/adapters/PPM.cpp
     src/adapters/PWM.cpp
     src/adapters/WS2812.cpp
+    src/adapters/Ticker.cpp
 
     src/controllers/FSM.cpp
     src/controllers/AutoWaitState.cpp

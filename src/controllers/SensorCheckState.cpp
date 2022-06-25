@@ -11,39 +11,11 @@ namespace raiju {
 FSM::SensorCheckState::SensorCheckState() {}
 
 void FSM::SensorCheckState::enter(FSM* fsm) {
-    fsm->s_bt.transmit("s:scheck");
+    fsm->s_bt.transmit("state:SCHECK");
     fsm->s_driving.stop();
 }
 
 void FSM::SensorCheckState::cycle(FSM* fsm) {
-    if (fsm->s_smodule.is_start()) {
-        fsm->set_state(StrategyState::instance());
-        return;
-    }
-
-    auto ch3 = fsm->s_radio.get_ch3();
-    fsm->s_led.led_stripe_reset();
-
-    if (ch3 < 1200) {
-        fsm->set_round_strategy(StarStrategy::instance());
-        fsm->s_led.led_stripe_set_range(0, 7, Color{0, 127, 0});
-    } else if (ch3 < 1400) {
-        fsm->set_round_strategy(SmallStepsStrategy::instance());
-        fsm->s_led.led_stripe_set_range(0, 7, Color{0, 0, 127});
-    }
-    // else if (ch3 < 1600) {
-    //     fsm->round_strategy_idx = 3;
-    //     fsm->s_led.led_stripe_set_range(0, 7, Color{127, 127, 0});
-    // } else if (ch3 < 1800) {
-    //     fsm->round_strategy_idx = 4;
-    //     fsm->s_led.led_stripe_set_range(8, 15, Color{0, 127, 0});
-    // } else if (ch3 <= 2000) {
-    //     fsm->round_strategy_idx = 5;
-    //     fsm->s_led.led_stripe_set_range(8, 15, Color{0, 0, 127});
-    // }
-
-    fsm->s_led.led_stripe_send();
-
     auto ch4 = fsm->s_radio.get_ch4();
     if (ch4 < 1750) {
         fsm->set_state(IdleState::instance());
@@ -60,7 +32,7 @@ void FSM::SensorCheckState::cycle(FSM* fsm) {
     sensors[4] = 0x14;
 
     for (int i = 5; i <= 9; i++) {
-        if (fsm->s_distance.is_reading(i)) {
+        if (fsm->s_distance.is_reading((DistanceService::Position)i)) {
             sensors[i] = 0xFF;
         }
     }
