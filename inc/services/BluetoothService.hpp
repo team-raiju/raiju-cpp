@@ -12,18 +12,21 @@ namespace raiju {
 class BluetoothService : public hal::mcu::uart_interruptible {
 public:
     union Packet {
-        uint8_t _header;
-        uint8_t enabledDistanceSensors;
-        uint8_t enabledLineSensors;
-        uint8_t reverseSpeed;
-        uint8_t reverseTimeMs;
-        uint8_t turnSpeed;
-        uint8_t turnTimeMs;
-        uint8_t stepWaitTimeMs;
-        uint8_t preStrategy;
-        uint8_t strategy;
-        uint8_t maxMotorSpeed;
-        uint8_t _chk;
+        struct {
+            uint8_t _header;
+            uint8_t enabledDistanceSensors;
+            uint8_t enabledLineSensors;
+            uint8_t reverseSpeed;
+            uint8_t reverseTimeMs;
+            uint8_t turnSpeed;
+            uint8_t turnTimeMs;
+            uint8_t stepWaitTimeMs;
+            uint8_t preStrategy;
+            uint8_t strategy;
+            uint8_t maxMotorSpeed;
+            uint8_t _chk;
+        };
+        uint8_t raw[PACKET_SIZE];
     };
 
     BluetoothService();

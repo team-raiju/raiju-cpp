@@ -73,23 +73,27 @@ void FSM::process_bt() {
 void FSM::report_config() {
     char buffer[20];
 
-    snprintf(buffer, 20, "str:%d:%d", this->start_strategy_idx, this->round_strategy_idx);
+    snprintf(buffer, 20, "sens:%hu:%hu", config::enabledDistanceSensors, config::enabledLineSensors);
     this->s_bt.transmit(buffer);
     hal::mcu::sleep(10);
 
-    snprintf(buffer, 20, "mms:%d", config::maxMotorSpeed);
+    snprintf(buffer, 20, "rev:%hu:%hu", config::reverseSpeed, config::reverseTimeMs);
     this->s_bt.transmit(buffer);
     hal::mcu::sleep(10);
 
-    snprintf(buffer, 20, "rev:%d:%d", config::reverseSpeed, config::reverseTimeMs);
+    snprintf(buffer, 20, "turn:%hu:%hu", config::turnSpeed, config::turnTimeMs);
     this->s_bt.transmit(buffer);
     hal::mcu::sleep(10);
 
-    snprintf(buffer, 20, "turn:%d:%d", config::turnSpeed, config::turnTimeMs);
+    snprintf(buffer, 20, "step:%hu", config::stepWaitTimeMs);
     this->s_bt.transmit(buffer);
     hal::mcu::sleep(10);
 
-    snprintf(buffer, 20, "step:%d", config::stepWaitTimeMs);
+    snprintf(buffer, 20, "str:%hu:%hu", this->start_strategy_idx, this->round_strategy_idx);
+    this->s_bt.transmit(buffer);
+    hal::mcu::sleep(10);
+
+    snprintf(buffer, 20, "mms:%hu", config::maxMotorSpeed);
     this->s_bt.transmit(buffer);
     hal::mcu::sleep(10);
 }
