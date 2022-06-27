@@ -1,7 +1,5 @@
 #include <cstring>
 
-// #include "utils.h"
-
 #include "hal.hpp"
 
 #include "BluetoothService.hpp"
@@ -38,7 +36,7 @@ bool BluetoothService::data_available() {
 
 BluetoothService::Packet BluetoothService::last_read_packet() {
     Packet p;
-    memcpy(&p, dma_data, sizeof(Packet));
+    std::memcpy(&p, dma_data, sizeof(Packet));
     return p;
 }
 
