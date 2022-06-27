@@ -14,4 +14,5 @@ NamespaceIndentation: None
 FixNamespaceComments: false
 PointerAlignment: Left
 AlwaysBreakTemplateDeclarations: Yes
+Cpp11BracedListStyle: false
 ...

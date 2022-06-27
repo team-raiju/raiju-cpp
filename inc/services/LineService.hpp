@@ -1,6 +1,9 @@
 #if !defined(__LINE_SERVICE_HPP__)
 #define __LINE_SERVICE_HPP__
 
+#include <cstdint>
+#include <map>
+
 #include "ADCDMA.hpp"
 
 namespace raiju {
@@ -21,7 +24,7 @@ public:
     };
 
     // Maps a Position (array index) to a mask for config::enabledLineSensors
-    static const uint8_t configMask[];
+    static const std::map<Position, uint8_t> configMask;
 
     LineService();
 

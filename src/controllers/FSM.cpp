@@ -48,6 +48,11 @@ void FSM::process_bt() {
 
     auto packet = this->s_bt.last_read_packet();
 
+    if (packet.is_data_request()) {
+        report_config();
+        return;
+    }
+
     config::enabledDistanceSensors = packet.enabledDistanceSensors;
     config::enabledLineSensors = packet.enabledLineSensors;
     config::maxMotorSpeed = packet.maxMotorSpeed;
@@ -66,8 +71,6 @@ void FSM::process_bt() {
         this->start_strategy_idx = packet.preStrategy;
         this->start_strategy = strategies[this->start_strategy_idx];
     }
-
-    report_config();
 }
 
 void FSM::report_config() {

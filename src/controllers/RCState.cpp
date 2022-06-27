@@ -46,20 +46,20 @@ void FSM::RCState::cycle(FSM* fsm) {
             mcu::sleep(100);
         }
 
-        if (fsm->s_distance.is_reading(DistanceService::Position::FRONT) ||
-            (fsm->s_distance.is_reading(DistanceService::Position::BRIGHT) &&
-             fsm->s_distance.is_reading(DistanceService::Position::BLEFT))) {
+        if (fsm->s_distance.is_reading(DistanceService::Position::F) ||
+            (fsm->s_distance.is_reading(DistanceService::Position::R) &&
+             fsm->s_distance.is_reading(DistanceService::Position::L))) {
             mot1 = mot2 = 100;
-        } else if (fsm->s_distance.is_reading(DistanceService::Position::BRIGHT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::R)) {
             mot1 = 75;
             mot2 = 30;
-        } else if (fsm->s_distance.is_reading(DistanceService::Position::BLEFT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::L)) {
             mot1 = 30;
             mot2 = 75;
-        } else if (fsm->s_distance.is_reading(DistanceService::Position::RIGHT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::FR)) {
             mot1 = 75;
             mot2 = -75;
-        } else if (fsm->s_distance.is_reading(DistanceService::Position::LEFT)) {
+        } else if (fsm->s_distance.is_reading(DistanceService::Position::FL)) {
             mot1 = -75;
             mot2 = 75;
         } else {

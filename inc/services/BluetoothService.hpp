@@ -26,7 +26,9 @@ public:
             uint8_t maxMotorSpeed;
             uint8_t _chk;
         };
-        uint8_t raw[PACKET_SIZE];
+        uint8_t _raw[PACKET_SIZE];
+
+        bool is_data_request();
     };
 
     BluetoothService();

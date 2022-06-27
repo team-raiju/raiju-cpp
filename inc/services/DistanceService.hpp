@@ -2,6 +2,7 @@
 #define __DISTANCE_SERVICE_HPP__
 
 #include <cstdint>
+#include <map>
 
 #include "hal.hpp"
 
@@ -11,15 +12,17 @@ class DistanceService {
 public:
     // Position in the sensors array, depends on physical connection
     enum Position : uint8_t {
-        RIGHT = 4,
-        BRIGHT = 5,
-        FRONT = 6,
-        BLEFT = 7,
-        LEFT = 8,
+        L = 7,
+        FL = 8,
+        DL = 0, // TODO
+        F = 6,
+        DR = 0, // TODO
+        FR = 4,
+        R = 5,
     };
 
     // Maps a Position (array index) to a mask for config::enabledDistanceSensors
-    static const uint8_t configMask[];
+    static const std::map<Position, uint8_t> configMask;
 
     DistanceService();
 
