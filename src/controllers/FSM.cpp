@@ -10,7 +10,7 @@ static Strategy* strategies[] = {
     &StarStrategy::instance(),
 };
 
-FSM::FSM() : button(GPIOC, hal::GPIO::Pin::p15) {
+FSM::FSM() {
     state = &InitState::instance();
 }
 

@@ -79,8 +79,6 @@ private:
     BuzzerService s_buzzer;
     LineService s_line;
 
-    hal::GPIO button;
-
     State* state;
 
     Strategy* start_strategy = nullptr;

@@ -85,6 +85,12 @@ void add_uart_interrupt(uart_interruptible* interruptible) {
  * version inside HAL
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    // Software reset because we forgot a reset button
+    if (GPIO_Pin == GPIO_PIN_15) {
+        HAL_NVIC_SystemReset();
+        return;
+    }
+
     for (uint8_t i = 0; i < hal::mcu::m_exti_amount; i++) {
         hal::mcu::m_exti_ints[i]->on_interrupt(GPIO_Pin);
     }

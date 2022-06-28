@@ -17,10 +17,6 @@ void FSM::IdleState::enter(FSM* fsm) {
 }
 
 void FSM::IdleState::cycle(FSM* fsm) {
-    if (!fsm->button.is_active()) {
-        fsm->s_smodule.reset();
-    }
-
     auto ch4 = fsm->s_radio.get_ch4();
     if (ch4 > 1250 && ch4 < 1750) {
         fsm->set_state(RCState::instance());
