@@ -26,37 +26,20 @@ void BluetoothService::transmit(std::string data) {
 }
 
 bool BluetoothService::data_available() {
-    if (_data_available) {
-        _data_available = false;
-        return true;
+    if (!_data_available) {
+        return false;
     }
 
-    return false;
-}
-
-BluetoothService::Packet BluetoothService::last_read_packet() {
-    Packet p;
-    std::memcpy(&p, dma_data, sizeof(Packet));
-    return p;
-}
-
-void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
-    if (huart->Instance != uart.instance()) {
-        return;
-    }
+    _data_available = false;
 
     // Request config mode
     if (dma_data[0] == 0xFE && dma_data[1] == 0xFE) {
-        _data_available = true;
-        uart.receive_dma(dma_data, sizeof(Packet));
-        return;
+        return true;
     }
 
     // Header should always be 0xFF
     if (dma_data[0] != 0xFF) {
-        _data_available = false;
-        uart.receive_dma(dma_data, sizeof(Packet));
-        return;
+        return false;
     }
 
     uint8_t chk = 0;
@@ -65,12 +48,30 @@ void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
         chk ^= dma_data[i];
     }
 
-    if (chk == dma_data[PACKET_SIZE - 1]) {
-        _data_available = true;
+    if (chk != dma_data[PACKET_SIZE - 1]) {
+        return false;
     }
 
-    // Start over
+    return true;
+}
+
+BluetoothService::Packet BluetoothService::last_read_packet() {
+    Packet p;
+    std::memcpy(&p, dma_data, sizeof(Packet));
+
+    // Be ready for next packet
+    std::memset(dma_data, 0, PACKET_SIZE);
     uart.receive_dma(dma_data, sizeof(Packet));
+
+    return p;
+}
+
+void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
+    if (huart->Instance != uart.instance()) {
+        return;
+    }
+
+    _data_available = true;
 }
 
 } // namespace raiju
