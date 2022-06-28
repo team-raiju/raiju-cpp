@@ -48,16 +48,13 @@ void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
     // Request config mode
     if (dma_data[0] == 0xFE && dma_data[1] == 0xFE) {
         _data_available = true;
+        uart.receive_dma(dma_data, sizeof(Packet));
         return;
     }
 
     // Header should always be 0xFF
     if (dma_data[0] != 0xFF) {
         _data_available = false;
-
-        // Faulty packet, reset dma
-        uart.stop_dma();
-        memset(dma_data, 0, PACKET_SIZE);
         uart.receive_dma(dma_data, sizeof(Packet));
         return;
     }
@@ -70,12 +67,9 @@ void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
 
     if (chk == dma_data[PACKET_SIZE - 1]) {
         _data_available = true;
-        return;
     }
 
-    // Faulty packet, reset dma
-    uart.stop_dma();
-    memset(dma_data, 0, PACKET_SIZE);
+    // Start over
     uart.receive_dma(dma_data, sizeof(Packet));
 }
 

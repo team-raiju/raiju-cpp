@@ -119,6 +119,8 @@ target_compile_options(${EXECUTABLE} PRIVATE
     -Wall
 
     $<$<CONFIG:Debug>:-Og>
+    $<$<CONFIG:Debug>:-gdwarf-4>
+    $<$<CONFIG:Debug>:-gstrict-dwarf>
 )
 
 target_link_options(${EXECUTABLE} PRIVATE
