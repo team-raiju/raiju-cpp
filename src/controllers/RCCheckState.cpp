@@ -7,7 +7,7 @@ namespace raiju {
 FSM::RCCheckState::RCCheckState() {}
 
 void FSM::RCCheckState::enter(FSM* fsm) {
-    fsm->s_bt.transmit("s:RCCHECK");
+    fsm->s_bt.transmit("state:RCCHECK");
 }
 
 void FSM::RCCheckState::cycle(FSM* fsm) {}

@@ -39,6 +39,7 @@ bool BluetoothService::data_available() {
 
     // Header should always be 0xFF
     if (dma_data[0] != 0xFF) {
+        this->reset();
         return false;
     }
 
@@ -49,6 +50,7 @@ bool BluetoothService::data_available() {
     }
 
     if (chk != dma_data[PACKET_SIZE - 1]) {
+        this->reset();
         return false;
     }
 
@@ -60,8 +62,7 @@ BluetoothService::Packet BluetoothService::last_read_packet() {
     std::memcpy(&p, dma_data, sizeof(Packet));
 
     // Be ready for next packet
-    std::memset(dma_data, 0, PACKET_SIZE);
-    uart.receive_dma(dma_data, sizeof(Packet));
+    this->reset();
 
     return p;
 }
@@ -72,6 +73,11 @@ void BluetoothService::on_interrupt(UART_HandleTypeDef* huart) {
     }
 
     _data_available = true;
+}
+
+void BluetoothService::reset() {
+    std::memset(dma_data, 0, PACKET_SIZE);
+    uart.receive_dma(dma_data, sizeof(Packet));
 }
 
 } // namespace raiju

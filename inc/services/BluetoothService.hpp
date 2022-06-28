@@ -46,6 +46,8 @@ private:
 
     bool _data_available;
     uint8_t dma_data[PACKET_SIZE];
+
+    void reset();
 };
 
 } // namespace raiju
