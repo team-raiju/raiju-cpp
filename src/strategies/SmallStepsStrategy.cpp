@@ -5,6 +5,7 @@
 namespace raiju {
 
 SmallStepsStrategy::SmallStepsStrategy() : Strategy() {
+    name = "small steps";
     still = false;
 }
 
@@ -19,8 +20,7 @@ void SmallStepsStrategy::run(FSM* fsm) {
     }
 
     if (fsm->s_distance.is_reading(DistanceService::F) ||
-        (fsm->s_distance.is_reading(DistanceService::R) &&
-         fsm->s_distance.is_reading(DistanceService::L))) {
+        (fsm->s_distance.is_reading(DistanceService::R) && fsm->s_distance.is_reading(DistanceService::L))) {
         fsm->s_driving.drive(100, 100);
         still = false;
     } else if (fsm->s_distance.is_reading(DistanceService::R)) {

@@ -1,6 +1,8 @@
 #if !defined(__STRATEGY_HPP__)
 #define __STRATEGY_HPP__
 
+#include <string>
+
 #include "Ticker.hpp"
 
 #define declStrategy(StrategyName, extras)                                                                             \
@@ -24,6 +26,7 @@ protected:
     Strategy() {}
 
 public:
+    std::string name;
     virtual void run(FSM* fsm) = 0;
 
     virtual ~Strategy(){};

@@ -4,7 +4,9 @@
 
 namespace raiju {
 
-StarStrategy::StarStrategy() : Strategy() {}
+StarStrategy::StarStrategy() : Strategy() {
+    name = "star";
+}
 
 void StarStrategy::run(FSM* fsm) {
     if (fsm->s_line.is_white(LineService::FR1) || fsm->s_line.is_white(LineService::FL1)) {
@@ -17,8 +19,7 @@ void StarStrategy::run(FSM* fsm) {
     }
 
     if (fsm->s_distance.is_reading(DistanceService::F) ||
-        (fsm->s_distance.is_reading(DistanceService::R) &&
-         fsm->s_distance.is_reading(DistanceService::L))) {
+        (fsm->s_distance.is_reading(DistanceService::R) && fsm->s_distance.is_reading(DistanceService::L))) {
         fsm->s_driving.drive(100, 100);
     } else if (fsm->s_distance.is_reading(DistanceService::R)) {
         fsm->s_driving.drive(75, 30);

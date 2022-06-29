@@ -76,6 +76,12 @@ void FSM::process_bt() {
 void FSM::report_config() {
     char buffer[20];
 
+    for (size_t i = 0; i < len(strategies); i++) {
+        snprintf(buffer, 20, "ss:%d:%s", i, i > 0 ? strategies[i]->name.c_str() : "-");
+        this->s_bt.transmit(buffer);
+        hal::mcu::sleep(10);
+    }
+
     snprintf(buffer, 20, "sens:%hu:%hu", config::enabledDistanceSensors, config::enabledLineSensors);
     this->s_bt.transmit(buffer);
     hal::mcu::sleep(10);
