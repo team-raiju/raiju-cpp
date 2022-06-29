@@ -54,6 +54,7 @@ add_executable(${EXECUTABLE}
     ${HAL_FILES}
     src/main.cpp
     src/config.cpp
+    src/debug.cpp
 
     src/adapters/ADCDMA.cpp
     src/adapters/PPM.cpp
@@ -86,6 +87,7 @@ add_executable(${EXECUTABLE}
 
 target_compile_definitions(${EXECUTABLE} PRIVATE
     -DUSE_HAL_DRIVER
+    -DUART_DEBUG
     -DSTM32F103xG
 
     $<$<CONFIG:Debug>:DEBUG>
@@ -119,8 +121,6 @@ target_compile_options(${EXECUTABLE} PRIVATE
     -Wall
 
     $<$<CONFIG:Debug>:-Og>
-    $<$<CONFIG:Debug>:-gdwarf-4>
-    $<$<CONFIG:Debug>:-gstrict-dwarf>
 )
 
 target_link_options(${EXECUTABLE} PRIVATE
