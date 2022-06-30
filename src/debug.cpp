@@ -6,13 +6,8 @@
 #include "config.hpp"
 #include "hal.hpp"
 
+#if defined(UART_DEBUG)
 namespace raiju::debug {
-
-#if !defined(UART_DEBUG)
-
-void log(std::string data) {}
-
-#else
 
 static hal::UART uart(&huart1);
 
@@ -20,6 +15,6 @@ void log(std::string data) {
     uart.transmit((uint8_t*)data.data(), data.size());
 }
 
-#endif // UART_DEBUG
-
 } // namespace raiju::debug
+
+#endif // UART_DEBUG

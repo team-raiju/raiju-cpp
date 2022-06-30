@@ -83,6 +83,7 @@ add_executable(${EXECUTABLE}
 
     src/strategies/StarStrategy.cpp
     src/strategies/SmallStepsStrategy.cpp
+    src/strategies/StartLeftStrategy.cpp
 )
 
 target_compile_definitions(${EXECUTABLE} PRIVATE

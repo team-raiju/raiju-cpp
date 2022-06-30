@@ -34,6 +34,7 @@ public:
 
 declStrategy(SmallStepsStrategy, bool still; Ticker stepTicker;);
 declStrategy(StarStrategy, );
+declStrategy(StartLeftStrategy, );
 
 }
 

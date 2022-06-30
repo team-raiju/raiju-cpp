@@ -36,6 +36,7 @@ namespace raiju {
 class FSM {
     friend class SmallStepsStrategy;
     friend class StarStrategy;
+    friend class StartLeftStrategy;
 
 public:
     class State {

@@ -15,7 +15,7 @@ void FSM::InitState::enter(FSM* fsm) {
     fsm->s_driving.stop();
     fsm->s_line.start();
 
-    debug::log("INIT!");
+    DEBUG_LOG("INIT!");
 }
 
 void FSM::InitState::cycle(FSM* fsm) {

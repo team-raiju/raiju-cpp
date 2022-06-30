@@ -8,6 +8,7 @@ static Strategy* strategies[] = {
     nullptr,
     &SmallStepsStrategy::instance(),
     &StarStrategy::instance(),
+    &StartLeftStrategy::instance(),
 };
 
 FSM::FSM() {
