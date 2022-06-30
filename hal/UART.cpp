@@ -18,6 +18,10 @@ void UART::receive_dma(uint8_t* data, size_t size) {
     HAL_UART_Receive_DMA(huart, data, size);
 }
 
+void UART::receive_it(uint8_t* data, size_t size) {
+    HAL_UART_Receive_IT(huart, data, size);
+}
+
 void UART::stop_dma() {
     HAL_UART_DMAStop(huart);
 }

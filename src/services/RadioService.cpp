@@ -1,3 +1,5 @@
+#ifndef UART_RADIO
+
 #include "utils.h"
 
 #include "RadioService.hpp"
@@ -38,3 +40,5 @@ uint16_t RadioService::get_ch4() const {
 }
 
 } // namespace raiju
+
+#endif

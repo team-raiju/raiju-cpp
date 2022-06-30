@@ -23,6 +23,7 @@ public:
     void transmit(uint8_t* data, size_t size, uint32_t timeout = 100);
 
     void receive_dma(uint8_t* data, size_t size);
+    void receive_it(uint8_t* data, size_t size);
     void stop_dma();
 
     USART_TypeDef* instance() const;

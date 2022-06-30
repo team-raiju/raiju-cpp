@@ -79,6 +79,7 @@ add_executable(${EXECUTABLE}
     src/services/LEDService.cpp
     src/services/LineService.cpp
     src/services/RadioService.cpp
+    src/services/UartRadioService.cpp
     src/services/StartModuleService.cpp
 
     src/strategies/StarStrategy.cpp
@@ -88,7 +89,8 @@ add_executable(${EXECUTABLE}
 
 target_compile_definitions(${EXECUTABLE} PRIVATE
     -DUSE_HAL_DRIVER
-    -DUART_DEBUG
+    # -DUART_DEBUG
+    -DUART_RADIO
     -DSTM32F103xG
 
     $<$<CONFIG:Debug>:DEBUG>
