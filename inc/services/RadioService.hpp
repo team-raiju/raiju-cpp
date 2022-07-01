@@ -11,7 +11,7 @@
 #include "Ticker.hpp"
 #include "hal.hpp"
 
-#define RXDATA_SIZE 30
+#define RXDATA_SIZE 25
 #define CHANNELS 16
 
 namespace raiju {
