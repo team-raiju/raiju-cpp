@@ -10,8 +10,8 @@ public:
     Ticker(uint32_t target = 0xFFFFFFFF);
 
     void reset();
-    uint32_t get();
-    bool expired();
+    uint32_t get() const;
+    bool expired() const;
 
 private:
     uint32_t ticks;
