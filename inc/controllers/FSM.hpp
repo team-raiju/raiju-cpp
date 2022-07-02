@@ -31,6 +31,9 @@
         extras                                                                                                         \
     }
 
+#define DEFAULT_START_STRATEGY_IDX 0
+#define DEFAULT_ROUND_STRATEGY_IDX 1
+
 namespace raiju {
 
 class FSM {
@@ -85,8 +88,8 @@ private:
     Strategy* start_strategy = nullptr;
     Strategy* round_strategy = nullptr;
 
-    uint8_t start_strategy_idx = 0;
-    uint8_t round_strategy_idx = 0;
+    uint8_t start_strategy_idx = DEFAULT_START_STRATEGY_IDX;
+    uint8_t round_strategy_idx = DEFAULT_ROUND_STRATEGY_IDX;
 
     void process_bt();
     void report_config();

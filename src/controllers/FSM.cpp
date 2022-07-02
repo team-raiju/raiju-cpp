@@ -33,11 +33,17 @@ void FSM::set_state(State& state) {
 void FSM::run_start_strategy() {
     if (this->start_strategy != nullptr) {
         this->start_strategy->run(this);
+    } else if (this->start_strategy_idx != 0){
+        this->start_strategy = strategies[this->start_strategy_idx];
+        this->start_strategy->run(this);
     }
 }
 
 void FSM::run_round_strategy() {
     if (this->round_strategy != nullptr) {
+        this->round_strategy->run(this);
+    }  else if (this->round_strategy_idx != 0){
+        this->round_strategy = strategies[this->round_strategy_idx];
         this->round_strategy->run(this);
     }
 }
