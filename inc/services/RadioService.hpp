@@ -14,6 +14,11 @@
 #define RXDATA_SIZE 25
 #define CHANNELS 16
 
+#define RX_RADIO_FIRST_BYTE 0x0F
+#define RX_RADIO_LAST_BYTE  0x00
+#define RX_RADIO_MIN_VALUE  0
+#define RX_RADIO_MAX_VALUE  2047
+
 namespace raiju {
 
 class RadioService
@@ -44,8 +49,8 @@ private:
 #ifdef UART_RADIO
     hal::UART uart;
 
-    uint8_t rxdata[RXDATA_SIZE];
-    uint16_t channels[CHANNELS];
+    uint8_t rxdata[RXDATA_SIZE] = {0};
+    uint16_t channels[CHANNELS] = {0};
 
     Ticker last_sbus_packet;
 #else
