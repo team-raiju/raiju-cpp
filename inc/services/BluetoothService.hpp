@@ -29,6 +29,7 @@ public:
         uint8_t _raw[PACKET_SIZE];
 
         bool is_data_request();
+        bool is_state_swap_request();
     };
 
     BluetoothService();

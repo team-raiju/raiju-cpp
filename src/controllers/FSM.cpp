@@ -13,6 +13,11 @@ static Strategy* strategies[] = {
 
 FSM::FSM() {
     state = &InitState::instance();
+    this->start_strategy_idx = 0;
+    this->round_strategy_idx = 1;
+
+    this->start_strategy = strategies[this->start_strategy_idx];
+    this->round_strategy = strategies[this->round_strategy_idx];
 }
 
 void FSM::init() {
@@ -33,17 +38,11 @@ void FSM::set_state(State& state) {
 void FSM::run_start_strategy() {
     if (this->start_strategy != nullptr) {
         this->start_strategy->run(this);
-    } else if (this->start_strategy_idx != 0){
-        this->start_strategy = strategies[this->start_strategy_idx];
-        this->start_strategy->run(this);
     }
 }
 
 void FSM::run_round_strategy() {
     if (this->round_strategy != nullptr) {
-        this->round_strategy->run(this);
-    }  else if (this->round_strategy_idx != 0){
-        this->round_strategy = strategies[this->round_strategy_idx];
         this->round_strategy->run(this);
     }
 }
@@ -57,6 +56,15 @@ void FSM::process_bt() {
 
     if (packet.is_data_request()) {
         report_config();
+        return;
+    }
+
+    if (packet.is_state_swap_request()) {
+        if (this->state != &IdleState::instance()) {
+            this->set_state(IdleState::instance());
+        } else {
+            this->set_state(AutoWaitState::instance());
+        }
         return;
     }
 

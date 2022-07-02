@@ -10,6 +10,10 @@ bool BluetoothService::Packet::is_data_request() {
     return _raw[0] == 0xFE && _raw[1] == 0xFE;
 }
 
+bool BluetoothService::Packet::is_state_swap_request() {
+    return _raw[0] == 0xFE && _raw[1] == 0xEF;
+}
+
 BluetoothService::BluetoothService() : uart(&huart3) {
     hal::mcu::add_uart_interrupt(this);
     _data_available = false;
@@ -34,6 +38,11 @@ bool BluetoothService::data_available() {
 
     // Request config mode
     if (dma_data[0] == 0xFE && dma_data[1] == 0xFE) {
+        return true;
+    }
+
+    // Go to state
+    if (dma_data[0] == 0xFE && dma_data[1] == 0xEF) {
         return true;
     }
 
