@@ -18,12 +18,13 @@ void FSM::IdleState::enter(FSM* fsm) {
 
 void FSM::IdleState::cycle(FSM* fsm) {
     auto ch4 = fsm->s_radio.get_ch4();
-    if (ch4 > 1250 && ch4 < 1750) {
+
+    if (ch4 > CH4_LOW_THRESHOLD && ch4 < CH4_HIGH_THRESHOLD) {
         fsm->set_state(RCState::instance());
         return;
     }
 
-    if (ch4 > 1750) {
+    if (ch4 >= CH4_HIGH_THRESHOLD) {
         fsm->set_state(AutoWaitState::instance());
         return;
     }

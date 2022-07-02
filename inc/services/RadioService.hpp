@@ -19,6 +19,23 @@
 #define RX_RADIO_MIN_VALUE  0
 #define RX_RADIO_MAX_VALUE  2047
 
+
+#ifdef UART_RADIO
+    #define CH4_LOW_THRESHOLD   768
+    #define CH4_HIGH_THRESHOLD  1268
+    #define CH3_LOW_THRESHOLD   768
+    #define CH3_HIGH_THRESHOLD  1268
+
+#else
+    #define CH4_LOW_THRESHOLD   1250
+    #define CH4_HIGH_THRESHOLD  1750
+    #define CH3_LOW_THRESHOLD   1500
+    #define CH3_HIGH_THRESHOLD  1800
+
+
+#endif
+
+
 namespace raiju {
 
 class RadioService
@@ -51,6 +68,7 @@ private:
 
     uint8_t rxdata[RXDATA_SIZE] = {0};
     uint16_t channels[CHANNELS] = {0};
+    bool last_data_broken;
 
     Ticker last_sbus_packet;
 #else

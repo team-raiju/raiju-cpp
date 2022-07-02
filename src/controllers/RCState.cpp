@@ -17,12 +17,12 @@ void FSM::RCState::enter(FSM* fsm) {
 
 void FSM::RCState::cycle(FSM* fsm) {
     auto ch4 = fsm->s_radio.get_ch4();
-    if ((ch4 < 1250 || ch4 > 1750) && !leaving) {
+    if ((ch4 < CH4_LOW_THRESHOLD || ch4 > CH4_HIGH_THRESHOLD) && !leaving) {
         leaveTicker.reset();
         leaving = true;
     }
 
-    if (ch4 >= 1250 && ch4 <= 1750) {
+    if (ch4 >= CH4_LOW_THRESHOLD && ch4 <= CH4_HIGH_THRESHOLD) {
         leaving = false;
     }
 
@@ -36,7 +36,9 @@ void FSM::RCState::cycle(FSM* fsm) {
     auto mot1 = coords.y + coords.x;
     auto mot2 = coords.y - coords.x;
 
-    if (fsm->s_radio.get_ch3() > 1800 && coords.y > 60) {
+    
+
+    if (fsm->s_radio.get_ch3() > CH3_HIGH_THRESHOLD && coords.y > 60) {
         if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
             fsm->s_driving.drive(-100, -100);
             mcu::sleep(150); // TODO: Calibração desses valores de tempo de volta pras curvas
@@ -65,7 +67,7 @@ void FSM::RCState::cycle(FSM* fsm) {
         } else {
             mot1 = mot2 = 60;
         }
-    } else if (fsm->s_radio.get_ch3() > 1500) {
+    } else if (fsm->s_radio.get_ch3() > CH3_LOW_THRESHOLD) {
         if (fsm->s_line.is_white(LineService::Position::FR1) || fsm->s_line.is_white(LineService::Position::FL1)) {
             mot1 = mot2 = -100;
         } else if (fsm->s_line.is_white(LineService::Position::BR) || fsm->s_line.is_white(LineService::Position::BL)) {

@@ -37,12 +37,12 @@ void FSM::StrategyState::cycle(FSM* fsm) {
 
     // Leave via controller
     auto ch4 = fsm->s_radio.get_ch4();
-    if ((ch4 < 1750) && !leaving) {
+    if ((ch4 < CH4_HIGH_THRESHOLD) && !leaving) {
         leaveTicker.reset();
         leaving = true;
     }
 
-    if (ch4 >= 1750) {
+    if (ch4 >= CH4_HIGH_THRESHOLD) {
         leaving = false;
     }
 

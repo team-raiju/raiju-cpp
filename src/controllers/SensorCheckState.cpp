@@ -17,7 +17,7 @@ void FSM::SensorCheckState::enter(FSM* fsm) {
 
 void FSM::SensorCheckState::cycle(FSM* fsm) {
     auto ch4 = fsm->s_radio.get_ch4();
-    if (ch4 < 1750) {
+    if (ch4 < CH4_HIGH_THRESHOLD) {
         fsm->set_state(IdleState::instance());
         return;
     }
