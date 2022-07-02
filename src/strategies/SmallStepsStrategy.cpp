@@ -4,9 +4,10 @@
 
 namespace raiju {
 
-SmallStepsStrategy::SmallStepsStrategy() : Strategy() {
+SmallStepsStrategy::SmallStepsStrategy() : Strategy(), attackTicker(3000), stepTicker(3000) {
     name = "small steps";
     still = false;
+    attacking = false;
 }
 
 void SmallStepsStrategy::run(FSM* fsm) {
@@ -23,29 +24,44 @@ void SmallStepsStrategy::run(FSM* fsm) {
         (fsm->s_distance.is_reading(DistanceService::R) && fsm->s_distance.is_reading(DistanceService::L))) {
         fsm->s_driving.drive(100, 100);
         still = false;
+        if (!attacking) {
+            attacking = true;
+            attackTicker.reset();
+        }
     } else if (fsm->s_distance.is_reading(DistanceService::R)) {
         fsm->s_driving.drive(75, 30);
         still = false;
+        attacking = false;
     } else if (fsm->s_distance.is_reading(DistanceService::L)) {
         fsm->s_driving.drive(30, 75);
         still = false;
+        attacking = false;
     } else if (fsm->s_distance.is_reading(DistanceService::FR)) {
         fsm->s_driving.drive(75, -75);
         still = false;
+        attacking = false;
     } else if (fsm->s_distance.is_reading(DistanceService::FL)) {
         fsm->s_driving.drive(-75, 75);
         still = false;
+        attacking = false;
     } else {
         if (!still) {
             still = true;
             stepTicker.reset();
         }
         fsm->s_driving.drive(0, 0);
+        attacking = false;
     }
 
-    if (still && stepTicker.get() >= 3000) {
+    if (still && stepTicker.expired()) {
         still = false;
         fsm->s_driving.drive(50, 50);
+        hal::mcu::sleep(config::stepWaitTimeMs);
+    }
+
+    if (attacking && attackTicker.expired()) {
+        attacking = false;
+        fsm->s_driving.drive(-50, -50);
         hal::mcu::sleep(config::stepWaitTimeMs);
     }
 }

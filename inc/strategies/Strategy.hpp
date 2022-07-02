@@ -32,8 +32,8 @@ public:
     virtual ~Strategy(){};
 };
 
-declStrategy(SmallStepsStrategy, bool still; Ticker stepTicker;);
-declStrategy(StarStrategy, );
+declStrategy(SmallStepsStrategy, bool still; bool attacking; Ticker attackTicker; Ticker stepTicker;);
+declStrategy(StarStrategy, bool attacking; Ticker attackTicker;);
 declStrategy(StartLeftStrategy, );
 
 }

@@ -4,8 +4,9 @@
 
 namespace raiju {
 
-StarStrategy::StarStrategy() : Strategy() {
+StarStrategy::StarStrategy() : Strategy(), attackTicker(3000) {
     name = "star";
+    attacking = false;
 }
 
 void StarStrategy::run(FSM* fsm) {
@@ -21,16 +22,31 @@ void StarStrategy::run(FSM* fsm) {
     if (fsm->s_distance.is_reading(DistanceService::F) ||
         (fsm->s_distance.is_reading(DistanceService::R) && fsm->s_distance.is_reading(DistanceService::L))) {
         fsm->s_driving.drive(100, 100);
+        if (!attacking) {
+            attacking = true;
+            attackTicker.reset();
+        }
     } else if (fsm->s_distance.is_reading(DistanceService::R)) {
         fsm->s_driving.drive(75, 30);
+        attacking = false;
     } else if (fsm->s_distance.is_reading(DistanceService::L)) {
         fsm->s_driving.drive(30, 75);
+        attacking = false;
     } else if (fsm->s_distance.is_reading(DistanceService::FR)) {
         fsm->s_driving.drive(75, -75);
+        attacking = false;
     } else if (fsm->s_distance.is_reading(DistanceService::FL)) {
+        attacking = false;
         fsm->s_driving.drive(-75, 75);
     } else {
         fsm->s_driving.drive(60, 60);
+        attacking = false;
+    }
+
+    if (attacking && attackTicker.expired()) {
+        attacking = false;
+        fsm->s_driving.drive(-50, -50);
+        hal::mcu::sleep(config::stepWaitTimeMs);
     }
 }
 
