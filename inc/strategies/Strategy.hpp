@@ -35,6 +35,8 @@ public:
 declStrategy(SmallStepsStrategy, bool still; bool attacking; Ticker attackTicker; Ticker stepTicker;);
 declStrategy(StarStrategy, bool attacking; Ticker attackTicker;);
 declStrategy(StartLeftStrategy, );
+declStrategy(StartRightStrategy, );
+
 
 }
 

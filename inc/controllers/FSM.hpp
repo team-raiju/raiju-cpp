@@ -37,6 +37,8 @@ class FSM {
     friend class SmallStepsStrategy;
     friend class StarStrategy;
     friend class StartLeftStrategy;
+    friend class StartRightStrategy;
+
 
 public:
     class State {
