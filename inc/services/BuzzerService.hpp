@@ -14,7 +14,9 @@ public:
     void beep(uint16_t duration = 50);
 
 private:
+#ifdef STM32F103xG
     PWM buzzer;
+#endif
 };
 
 } // namespace raiju

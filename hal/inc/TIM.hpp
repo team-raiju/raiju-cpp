@@ -10,7 +10,9 @@ extern "C" {
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim7;
+#ifdef STM32F103xG
 extern TIM_HandleTypeDef htim12;
+#endif
 extern DMA_HandleTypeDef hdma_tim2_ch1;
 
 #ifdef __cplusplus

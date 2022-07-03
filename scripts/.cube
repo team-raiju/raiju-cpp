@@ -1,4 +1,4 @@
-config load cube/raiju.ioc
+config load cube/raiju2.ioc
 SetCopyLibrary "copy only"
 project couplefilesbyip 0
 project toolchain Makefile

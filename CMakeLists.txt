@@ -37,7 +37,8 @@ set(STM32CUBE_GENERATED_FILES
     cube/Src/stm32f1xx_it.c
     cube/Src/system_stm32f1xx.c
 
-    cube/startup_stm32f103xg.s
+    # cube/startup_stm32f103xg.s
+    cube/startup_stm32f103xe.s
 )
 
 set(HAL_FILES
@@ -91,7 +92,9 @@ target_compile_definitions(${EXECUTABLE} PRIVATE
     -DUSE_HAL_DRIVER
     # -DUART_DEBUG
     -DUART_RADIO
-    -DSTM32F103xG
+
+    # -DSTM32F103xG
+    -DSTM32F103xE
 
     $<$<CONFIG:Debug>:DEBUG>
 )
@@ -127,7 +130,8 @@ target_compile_options(${EXECUTABLE} PRIVATE
 )
 
 target_link_options(${EXECUTABLE} PRIVATE
-    -T${CMAKE_SOURCE_DIR}/cube/STM32F103RFTx_FLASH.ld
+    # -T${CMAKE_SOURCE_DIR}/cube/STM32F103RFTx_FLASH.ld
+    -T${CMAKE_SOURCE_DIR}/cube/STM32F103RCTx_FLASH.ld
     -mcpu=cortex-m3
     -mthumb
     -specs=nano.specs

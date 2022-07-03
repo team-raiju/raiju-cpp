@@ -31,7 +31,9 @@ void init() {
     MX_TIM1_Init();
     MX_TIM2_Init();
     MX_TIM7_Init();
+#ifdef STM32F103xG
     MX_TIM12_Init();
+#endif
 
     MX_ADC1_Init();
 }

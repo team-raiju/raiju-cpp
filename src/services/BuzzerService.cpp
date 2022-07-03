@@ -165,9 +165,14 @@ using hal::TIM;
 
 namespace raiju {
 
-BuzzerService::BuzzerService() : buzzer(TIM(&htim12), TIM::Channel::ch1) {}
+BuzzerService::BuzzerService() 
+#ifdef STM32F103xG
+    : buzzer(TIM(&htim12), TIM::Channel::ch1) 
+#endif
+{}
 
 void BuzzerService::play_tetris() {
+#ifdef STM32F103xG
     for (uint8_t note = 0; note < len(tetris_note_duration); note++) {
         // to calculate the note duration, take one second divided by the note type.
         // e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
@@ -182,9 +187,11 @@ void BuzzerService::play_tetris() {
     }
 
     buzzer.set(0);
+#endif
 }
 
 void BuzzerService::play_megalovania() {
+#ifdef STM32F103xG
     for (uint8_t note = 0; note < len(megalovania_note_duration); note++) {
         buzzer.set(50);
 
@@ -197,12 +204,15 @@ void BuzzerService::play_megalovania() {
     }
 
     buzzer.set(0);
+#endif
 }
 
 void BuzzerService::beep(uint16_t duration) {
+#ifdef STM32F103xG
     buzzer.set(50);
     mcu::sleep(duration);
     buzzer.set(0);
+#endif
 }
 
 } // namespace raiju
