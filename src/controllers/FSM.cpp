@@ -9,11 +9,13 @@ static Strategy* strategies[] = {
     &SmallStepsStrategy::instance(),
     &StarStrategy::instance(),
     &StartLeftStrategy::instance(),
+    &StartRightStrategy::instance(),
+
 };
 
 FSM::FSM() {
     state = &InitState::instance();
-    this->start_strategy_idx = 0;
+    this->start_strategy_idx = 3;
     this->round_strategy_idx = 1;
 
     this->start_strategy = strategies[this->start_strategy_idx];
@@ -36,12 +38,14 @@ void FSM::set_state(State& state) {
 }
 
 void FSM::run_start_strategy() {
+    this->start_strategy = strategies[this->start_strategy_idx];
     if (this->start_strategy != nullptr) {
         this->start_strategy->run(this);
     }
 }
 
 void FSM::run_round_strategy() {
+    this->round_strategy = strategies[this->round_strategy_idx];
     if (this->round_strategy != nullptr) {
         this->round_strategy->run(this);
     }

@@ -17,17 +17,17 @@ void FSM::IdleState::enter(FSM* fsm) {
 }
 
 void FSM::IdleState::cycle(FSM* fsm) {
-    auto ch4 = fsm->s_radio.get_ch4();
+    // auto ch4 = fsm->s_radio.get_ch4();
 
-    if (ch4 > CH4_LOW_THRESHOLD && ch4 < CH4_HIGH_THRESHOLD) {
-        fsm->set_state(RCState::instance());
-        return;
-    }
+    // if (ch4 > CH4_LOW_THRESHOLD && ch4 < CH4_HIGH_THRESHOLD) {
+    //     fsm->set_state(RCState::instance());
+    //     return;
+    // }
 
-    if (ch4 >= CH4_HIGH_THRESHOLD) {
-        fsm->set_state(AutoWaitState::instance());
-        return;
-    }
+    // if (ch4 >= CH4_HIGH_THRESHOLD) {
+    //     fsm->set_state(AutoWaitState::instance());
+    //     return;
+    // }
 
     if (this->start_led) {
         this->start_led = false;
@@ -46,6 +46,9 @@ void FSM::IdleState::cycle(FSM* fsm) {
 
     fsm->s_led.toggle_board_led();
     mcu::sleep(500);
+
+    fsm->set_state(AutoWaitState::instance());
+    return;
 }
 
 void FSM::IdleState::exit(FSM* fsm) {

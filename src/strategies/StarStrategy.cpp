@@ -39,7 +39,7 @@ void StarStrategy::run(FSM* fsm) {
         attacking = false;
         fsm->s_driving.drive(-75, 75);
     } else {
-        fsm->s_driving.drive(60, 60);
+        fsm->s_driving.drive(50, 50);
         attacking = false;
     }
 

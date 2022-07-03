@@ -36,20 +36,20 @@ void FSM::StrategyState::cycle(FSM* fsm) {
     }
 
     // Leave via controller
-    auto ch4 = fsm->s_radio.get_ch4();
-    if ((ch4 < CH4_HIGH_THRESHOLD) && !leaving) {
-        leaveTicker.reset();
-        leaving = true;
-    }
+    // auto ch4 = fsm->s_radio.get_ch4();
+    // if ((ch4 < CH4_HIGH_THRESHOLD) && !leaving) {
+    //     leaveTicker.reset();
+    //     leaving = true;
+    // }
 
-    if (ch4 >= CH4_HIGH_THRESHOLD) {
-        leaving = false;
-    }
+    // if (ch4 >= CH4_HIGH_THRESHOLD) {
+    //     leaving = false;
+    // }
 
-    if (leaving && leaveTicker.expired()) {
-        fsm->set_state(IdleState::instance());
-        return;
-    }
+    // if (leaving && leaveTicker.expired()) {
+    //     fsm->set_state(IdleState::instance());
+    //     return;
+    // }
 
     if (!ran_initial) {
         ran_initial = true;

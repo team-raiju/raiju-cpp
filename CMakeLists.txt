@@ -90,7 +90,7 @@ add_executable(${EXECUTABLE}
 target_compile_definitions(${EXECUTABLE} PRIVATE
     -DUSE_HAL_DRIVER
     # -DUART_DEBUG
-    -DUART_RADIO
+    # -DUART_RADIO
     -DSTM32F103xG
 
     $<$<CONFIG:Debug>:DEBUG>

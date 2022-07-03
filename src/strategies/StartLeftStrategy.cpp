@@ -9,14 +9,23 @@ StartLeftStrategy::StartLeftStrategy() : Strategy() {
 }
 
 void StartLeftStrategy::run(FSM* fsm) {
-    fsm->s_driving.drive(-50, 50);
-    hal::mcu::sleep(50);
+    // fsm->s_driving.drive(-100, 100);
+    // hal::mcu::sleep(50);
 
-    fsm->s_driving.drive(config::maxMotorSpeed, config::maxMotorSpeed);
-    hal::mcu::sleep(500);
+    // fsm->s_driving.drive(100, 75);
+    // hal::mcu::sleep(220);
 
-    fsm->s_driving.drive(75, -75);
-    hal::mcu::sleep(100);
+    // fsm->s_driving.drive(75, -75);
+    // hal::mcu::sleep(45);
+
+    fsm->s_driving.drive(100, -100);
+    hal::mcu::sleep(40);
+
+    fsm->s_driving.drive(65, 100);
+    hal::mcu::sleep(240);
+
+    fsm->s_driving.drive(-75, 75);
+    hal::mcu::sleep(45);
 }
 
 Strategy& StartLeftStrategy::instance() {
