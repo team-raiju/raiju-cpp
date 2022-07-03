@@ -61,21 +61,21 @@ void RadioService::on_interrupt(UART_HandleTypeDef* huart) {
     do {
         // invalid packet; Ignore packet
         if (rxdata[0] != RX_RADIO_FIRST_BYTE || rxdata[RXDATA_SIZE - 1] != RX_RADIO_LAST_BYTE) {
-            memset(channels, 0, sizeof(channels));
+            memset(channels, 1000, sizeof(channels));
             break;
         }
 
         /* SBUS_SIGNAL_LOST */
-        if (rxdata[23] & (1 << 2)) {
-            memset(channels, 0, sizeof(channels));
-            break;
-        }
+        // if (rxdata[23] & (1 << 2)) {
+        //     memset(channels, 1000, sizeof(channels));
+        //     break;
+        // }
 
-        /* SBUS_SIGNAL_FAILSAFE */
-        if (rxdata[23] & (1 << 3)) {
-            memset(channels, 0, sizeof(channels));
-            break;
-        }
+        // /* SBUS_SIGNAL_FAILSAFE */
+        // if (rxdata[23] & (1 << 3)) {
+        //     memset(channels, 1000, sizeof(channels));
+        //     break;
+        // }
 
         last_sbus_packet.reset();
 
